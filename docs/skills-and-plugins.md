@@ -53,6 +53,7 @@ Then **start a new session**. Update with `/plugin update content-creation` (or 
 | `coaching` | `coaching-plan`, `excalidraw` |
 | `google-workspace` | `google-workspace-setup`, `md-to-gdoc` |
 | `skill-authoring` | `skill-scanner`, `get-experience` |
+| `second-brain` | `create-obsidian-brain`, `update-obsidian-brain` |
 
 Install as many as you want — no overlap, and a bundle only adds context for the skills it contains (progressive disclosure loads a skill's full body only when triggered).
 
