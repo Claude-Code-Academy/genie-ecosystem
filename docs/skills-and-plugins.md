@@ -49,6 +49,7 @@ Then **start a new session**. Update with `/plugin update content-creation` (or 
 
 | Bundle | Skills |
 |---|---|
+| `genie-essentials` | `genie-find-skills` |
 | `content-creation` | `youtube-script`, `youtube-metadata`, `tiktok-metadata`, `instagram-reels-script`, `instagram-reels-metadata`, `transcript-cleanup`, `descript`, `course-chapter-creator`, `instagram-carousel`, `blotato-publish` |
 | `coaching` | `coaching-plan`, `excalidraw` |
 | `google-workspace` | `google-workspace-setup`, `md-to-gdoc` |
