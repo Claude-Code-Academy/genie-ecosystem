@@ -32,16 +32,39 @@ cp -r genie-skills-library/skills/<skill-name> ~/.claude/skills/
 
 ## genie-plugin-marketplace
 
-**Themed bundles for the Claude Code CLI**, installed in one command and auto-updating. Skill content is identical to the library — the marketplace just ships them grouped, versioned, and updatable.
+**Themed bundles for Claude Code**, installed in one command and auto-updating. Skill content is identical to the library — the marketplace just ships them grouped, versioned, and updatable. Same bundles work in the **terminal (CLI)** and the **Claude Code desktop app**; pick whichever surface you live in.
 
-**Install a bundle** (inside Claude Code):
+Every install is the same two moves: **(1) add the marketplace once, then (2) install the bundle.** The marketplace name is `genie`. We'll use the `genie-essentials` bundle as the worked example.
+
+### In the terminal (Claude Code CLI)
+
+**Fast path — type the commands** (inside a Claude Code session):
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
-/plugin install content-creation@genie
+/plugin install genie-essentials@genie
 ```
 
-Then **start a new session**. Update with `/plugin update content-creation` (or `/plugin update` for all). Remove with `/plugin uninstall content-creation`.
+**Or use the menu** — run `/plugin` (note: **singular**, not `/plugins`) to open the plugin manager. It has four tabs — **Discover · Installed · Marketplaces · Errors** (move with `Tab` / `Shift+Tab`):
+
+1. Go to the **Marketplaces** tab → add `Claude-Code-Academy/genie-plugin-marketplace` (one-time).
+2. Switch to **Discover**, find the `genie-essentials` bundle, press **Enter** to install.
+3. Run **`/reload-plugins`** to activate it in the current session — or just start a new session. The `genie-find-skills` skill is then available; trigger it with `/genie-find-skills` or by asking "find me a skill for X".
+
+### In the Claude Code desktop app
+
+The desktop app does the same thing through a GUI — no commands to type:
+
+1. Click the **`+` button** next to the prompt box → choose **Plugins**.
+2. Click **Add plugin** to open the marketplace browser, and add the marketplace `Claude-Code-Academy/genie-plugin-marketplace` (one-time).
+3. Find the **`genie-essentials`** bundle in the browser and install it. Use **Manage plugins** later to enable, disable, or uninstall.
+4. Changes apply to the current session (or run `/reload-plugins`); the skill is then available the same way as in the terminal.
+
+> The `+` → **Plugins** option appears in **local and SSH sessions only** — not cloud sessions. Plugins install per scope (user / project / local), user scope being the default.
+
+### Manage & update (either surface)
+
+Update with `/plugin update genie-essentials` (or `/plugin update` for all). Remove with `/plugin uninstall genie-essentials`. List what's installed with `/plugin list`; list marketplaces with `/plugin marketplace list`.
 
 > Slash commands have to be typed by you — Claude can't fire `/plugin` on your behalf. But you can ask Claude to *print the exact commands* and help you fill in `.env` afterward.
 
