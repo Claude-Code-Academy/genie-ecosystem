@@ -21,7 +21,32 @@
 > **New here? Start with [docs/getting-started.md](docs/getting-started.md).**
 > **Not sure which tool you need? Jump to [docs/when-to-use-what.md](docs/when-to-use-what.md).**
 
-This is the **mother repo** for the Genie ecosystem. It owns no product code — it's the map. Everything Genie is published under [Claude Code Academy](https://github.com/Claude-Code-Academy); most of those repos are **🔒 members-only**. This repo is public so anyone can understand the whole picture before joining.
+This is the **mother repo** for the Genie ecosystem. It owns no product code — it's the map **and the front door**. Everything Genie is published under [Claude Code Academy](https://github.com/Claude-Code-Academy); most of those repos are **🔒 members-only**. This repo is public so anyone can understand the whole picture before joining.
+
+---
+
+## Install everything in one command
+
+Members: clone this repo, run one script, and pick what you want — it clones the OSes you choose and runs each one's own idempotent setup.
+
+```bash
+gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
+```
+
+- `python3 install.py --all --yes` — everything, no questions asked.
+- `python3 install.py --aios --profile member` — just the personal OS.
+- `python3 install.py --dry-run --all` — preview every step, change nothing.
+
+And the exact reverse, also one command:
+
+```bash
+python3 uninstall.py            # removes every plugin/marketplace/MCP server Genie installed
+python3 uninstall.py --purge    # ...and deletes the clones the installer created
+```
+
+Your `.env` files, `PERSONAL.md` overlays, and built projects always survive an uninstall. `--purge` only ever deletes clones the installer itself created, and refuses to touch any clone with uncommitted changes or user data (`.env`, `projects/`, `outputs/`) unless you add `--force`. After installing, add plugins à la carte any time: `/plugin install <name>@genie`.
+
+Using Codex or Hermes too? `python3 export-skills.py` copies every installed Genie skill into `~/.agents/skills/` (Codex's scan path) and `~/.hermes/skills/` — same SKILL.md format, no conversion. Keys live once in `~/.claude/genie/.env` and every surface finds them.
 
 ---
 
