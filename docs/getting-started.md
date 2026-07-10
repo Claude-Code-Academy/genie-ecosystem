@@ -2,6 +2,14 @@
 
 The shortest path from zero to a working Genie setup. Pick the entry point that matches what you're trying to do — you do **not** need to install everything.
 
+> **Want it all in one command?** Clone this repo and run the ecosystem installer — it clones the OSes you pick and runs each one's own setup:
+>
+> ```bash
+> gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
+> ```
+>
+> The exact reverse is `python3 uninstall.py` (add `--purge` to delete the clones too). Everything below still works standalone if you'd rather install just one piece.
+
 > **Most repos here are 🔒 members-only.** If a `git clone` or `gh repo clone` fails with "repository not found," you're not yet a member of the `Claude-Code-Academy` org. [Join the community](https://www.skool.com/claude-code-academy) and you'll be added.
 
 ---
@@ -101,7 +109,7 @@ cp -r genie-skills-library/skills/<skill-name> ~/.claude/skills/
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
-/plugin install content-creation@genie
+/plugin install content-os@genie
 ```
 
 Then start a new session. ➡️ Full details: [skills-and-plugins.md](skills-and-plugins.md)
