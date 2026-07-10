@@ -98,6 +98,7 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 | **[Products](docs/products.md)** | You want the deep dive on the OSes and the white-label catalog. |
 | **[Skills & plugins](docs/skills-and-plugins.md)** | You want to add capabilities — library vs marketplace vs Cowork vs curated. |
 | **[Workflows](docs/workflows.md)** | You want end-to-end recipes (ship a SaaS, run your day, deliver to a client). |
+| **[Genie Profile](docs/genie-profile.md)** | You want to understand or configure the shared owner identity and brand layer. |
 | **[FAQ](docs/faq.md)** | You have a specific question. |
 | **[Glossary](docs/glossary.md)** | A term (OS, skill, plugin, overlay, MCP, Cowork…) isn't clicking. |
 

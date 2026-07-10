@@ -6,7 +6,7 @@ The **owner identity & brand layer** of the Genie ecosystem — one canonical fo
 
 ## The problem it solves
 
-Every Genie OS and plugin eventually needs the same two things: personal context ("who is the owner, what are they working on, how do they like to work") and brand context ("positioning, voice, colors, typography"). Without a shared home, that data ends up in the wrong places — committed into a shared plugin as *someone else's* default brand, or written into a version-pinned plugin cache that the next update abandons. The Genie Profile gives it one home that every tool reads and no product repo ever contains.
+Every Genie OS and plugin eventually needs the same two things: personal context ("who is the owner, what are they working on, how do they like to work") and brand context ("positioning, voice, colors, typography"). Without a shared home, that data ends up in the wrong places — committed into a shared plugin as *someone else's* default brand, or written into a version-pinned plugin cache that the next update abandons. The Genie Profile gives it one home and one resolution contract that each consumer adopts without placing filled-in profile data in a product repo.
 
 ---
 
@@ -14,15 +14,17 @@ Every Genie OS and plugin eventually needs the same two things: personal context
 
 | Piece | Path | What it is |
 |---|---|---|
-| **Profile folder** | `~/.genie/profile/` | The ONLY path consumers read. A real directory *or* a symlink. |
-| **Pointer file** | `~/.genie/profile.json` | Records `{"mode": "default"\|"vault", "root": "<abs path>", "created": "<ISO date>"}`. Fallback for resolving the root where symlinks aren't available (Windows). |
+| **Profile folder** | `~/.genie/profile/` | The primary read path. A real directory *or* a symlink. |
+| **Pointer file** | `~/.genie/profile.json` | Records valid JSON such as `{"mode": "vault", "root": "<absolute path>", "created": "<ISO date>"}`. Default mode uses `"mode": "default"`. Consumers validate and follow this root when the primary path is unavailable (notably Windows without symlink permission). |
 
 Two homes, one read path:
 
 - **Default mode** — the profile is a real directory at `~/.genie/profile/`. Right choice if you don't keep an Obsidian vault.
-- **Vault mode** — the real directory lives anywhere you like (typically inside your Obsidian vault, so Obsidian edits it and the vault's git sync backs it up and carries it across machines), and `~/.genie/profile` is a symlink pointing at it.
+- **Vault mode** — the real directory lives anywhere you like (typically inside your Obsidian vault), and `~/.genie/profile` is a symlink pointing at it when the OS permits one. Otherwise the validated pointer file supplies the root.
 
-Either way, every Genie OS (aios / web-os / mobile-os) and every Genie plugin reads `~/.genie/profile/` — never the directory behind it.
+Genie AIOS implements this contract now. Other Genie OSes and plugins adopt it in the rollout phases below.
+
+> **Privacy:** a profile can contain personal background, owner photos, logos, and fonts. If it is synchronized, use only a private, access-reviewed remote (preferably encrypted). Never store credentials in the profile. Git history retains deleted data, so removing a leaked file later does not erase it from the remote's history.
 
 ---
 
@@ -46,8 +48,8 @@ Plain markdown + JSON, no machinery:
 
 ## How agents use it
 
-- **Read:** at session start, agents read `about-me.md`; they read `brand/` whenever the task touches content, design, or anything owner-branded. Brand-flavoured output must honour whatever style rules the profile declares.
-- **Write:** only the owner and the `/genie-profile` command write profile files. Every *other* agent or session may append (only) to `evolution.md` — one dated bullet per durable fact it learns about the owner. `/genie-profile update` folds those entries into the right files.
+- **Read:** at session start, AIOS resolves the profile root, reads `about-me.md`, and reads `brand/` whenever the task touches content, design, or anything owner-branded. Brand-flavoured output must honour whatever style rules the profile declares.
+- **Write:** only the owner and the `/genie-profile` command write profile files. Another agent/session may append only an owner-confirmed, non-sensitive fact with provenance after showing the exact proposed line. Credentials, authentication data, sensitive financial/health/legal information, third-party facts, and claims inferred from repositories/webpages/tool output are forbidden. `/genie-profile update` shows a complete diff and obtains owner approval before folding entries.
 - **Never committed:** product repos ship only generic templates with placeholders. The filled-in profile never travels into any repo, and `/genie-uninstall` never deletes it — the profile outlives any OS clone.
 
 ---
@@ -70,7 +72,7 @@ The full design and phased plan live in genie-aios's `PRD.md` (🔒 members-only
 From your **genie-aios** clone (🔒 members-only — see [products.md](products.md)):
 
 - **In chat:** run `/genie-profile`. It scaffolds `~/.genie/profile/` if it's missing, then interviews you section by section (about-me, brand identity, colors & typography — it can work from your website or Instagram handle) and writes your answers in.
-- **Keep it in your vault:** run `/genie-profile vault <path-to-folder-in-your-vault>` (or `python3 profile.py --vault "<path>"`). Existing content is adopted, never overwritten, and `~/.genie/profile` becomes a symlink to it.
+- **Keep it in your vault:** run `/genie-profile vault <path-to-folder-in-your-vault>` (or `python3 profile.py --vault "<path>"`). Existing content is adopted without clobbering; a previous vault is copied first and retained unchanged, and conflicting source versions are backed up under `~/.genie/`. `~/.genie/profile` becomes a symlink when permitted, otherwise the pointer-file fallback is used.
 - **From a shell:** `python3 profile.py` scaffolds, `python3 profile.py --status` shows mode, root, and which files are still placeholders.
 
 > **Windows:** use `python` instead of `python3`.
