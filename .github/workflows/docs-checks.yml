@@ -1,0 +1,31 @@
+name: Docs checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check changed lines for whitespace errors
+        shell: bash
+        run: |
+          if [[ -n "${{ github.base_ref }}" ]]; then
+            git fetch origin "${{ github.base_ref }}"
+            git diff --check "origin/${{ github.base_ref }}...HEAD"
+          else
+            git show --check --oneline --no-renames HEAD
+          fi
+      - run: python scripts/check_markdown_links.py

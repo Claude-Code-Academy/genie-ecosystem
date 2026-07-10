@@ -18,7 +18,8 @@ Plain-English definitions of the terms used across the Genie ecosystem.
 | **MCP (Model Context Protocol)** | The standard that lets Claude talk to external services (Supabase, Stripe, RevenueCat, Playwright, …). OS repos wire these up for you. |
 | **Orchestrator** | A skill that chains other skills in order without reimplementing them — e.g. `genie-app-builder` runs the build pipeline. |
 | **Overlay / PERSONAL.md** | Your private, gitignored customization layer for a skill. You edit `PERSONAL.md` (+ the `references/`, `assets/`, `examples/`, `snippets/` folders); the shared skill is never touched. |
-| **Profile** | Which set of plugin bundles `init.py` installs — `member` (default) or `maintainer` (adds internal tooling). |
+| **Install profile** | Which set of plugin bundles the installer adds — `member` (default), `maintainer` (adds internal tooling), or `client`. This is not the Genie Profile. |
+| **Genie Profile** | The owner-controlled identity and brand folder resolved from `~/.genie/profile/` or the validated fallback in `~/.genie/profile.json`. See [genie-profile.md](genie-profile.md). |
 | **init.py** | The one-command setup script in the OS repos. Idempotent and interactive; supports `--dry-run` and `--yes`. |
 | **genie-setup / setup.py** | Re-scaffolds skill overlays and regenerates `.env.example`. Run it after installing or updating skills inside a Genie repo. |
 | **White-label** | A finished, working product released so members can rebrand and sell it as their own (`genie-whitelabel`). |
