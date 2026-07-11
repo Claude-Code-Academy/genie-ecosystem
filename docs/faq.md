@@ -32,9 +32,13 @@ They install differently (aios is your workspace; the builders install as global
 
 Yes. The builder OSes namespace their skills (`genie-web-os:`, `genie-mobile-os:`) so they're active in every project and never collide. Live in genie-aios; reach for a builder when it's time to ship.
 
-### Library or marketplace — which way should I install skills?
+### Single skill or bundle — which way should I install?
 
-Library = copy one skill folder, you control updates, easy to read/tweak. Marketplace = themed bundles in one command, auto-updating. Same skill content either way. See [when-to-use-what.md](when-to-use-what.md#library-vs-marketplace-how-should-i-install-skills).
+Both come from the `genie` marketplace. **One skill:** `npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <name>` (needs Node) — installs it across every harness. **A whole use-case set:** `/plugin install <bundle>@genie`. See [when-to-use-what.md](when-to-use-what.md#single-skill-vs-bundle-how-should-i-install-skills).
+
+### Do my Genie skills work in Codex / Gemini CLI / Cursor / Hermes too?
+
+Yes. Installing a Genie plugin in Claude Code fans its skills out to `~/.agents/skills` (Codex, Cursor, OpenCode, Gemini CLI) and `~/.hermes/skills` (Hermes) — `init.py` does it as its last step (best-effort — it needs the `genie-essentials` plugin installed), and the `genie-add` skill keeps it in sync. Restart the other harness to pick up changes. See [skills-and-plugins.md](skills-and-plugins.md#install-once-use-everywhere).
 
 ### Why won't Claude run the `/plugin` commands for me?
 
@@ -50,7 +54,7 @@ Each skill ships an `env.example` listing the keys it needs. In a vanilla sessio
 
 ### CLI vs Cowork — does it matter?
 
-Yes. `genie-plugin-marketplace` targets the **Claude Code CLI**; `genie-cowork-plugin-marketplace` targets **Claude Cowork** (the desktop, chat-first mode). Same plugin format, different surface.
+Yes. `genie-plugin-marketplace` targets the **Claude Code CLI** (and Claude Desktop's **Code tab**, which shares CLI installs automatically). **Cowork** is a separate Anthropic-managed store that does **not** share CLI installs — a known limitation. Use the Code tab, or install Cowork-specific plugins from `genie-cowork-plugin-marketplace`. The cross-harness sync can also surface skills to Cowork-side agents via `~/.agents/skills`.
 
 ### What does "white-label" mean here?
 

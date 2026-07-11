@@ -18,7 +18,8 @@ The shortest path from zero to a working Genie setup. Pick the entry point that 
 
 You'll want these on your machine first:
 
-- **[Claude Code](https://docs.claude.com/en/docs/claude-code)** — the CLI everything runs on.
+- **Membership in the `Claude-Code-Academy` GitHub org** — the product repos are private. [Join the community](https://www.skool.com/claude-code-academy) to get added.
+- **[Claude Code](https://docs.claude.com/en/docs/claude-code)** — the CLI everything runs on (`claude` on your PATH).
 - **Git** and the **[GitHub CLI](https://cli.github.com/)** (`gh`) — for cloning the private repos. Run `gh auth login` once.
 - **Python 3** — the OS repos use a `python3 init.py` setup script. (**Windows:** use `python` instead of `python3` everywhere below.)
 
@@ -47,7 +48,7 @@ One clone, one command:
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-`init.py` is interactive and idempotent. It registers the Genie plugin marketplaces, installs the plugin bundles for your profile (default **member**), scaffolds your skill overlays, generates `.env.example`, and walks you through `config.yaml` + `memory/about-me.md`.
+`init.py` is interactive and idempotent (7 steps). It registers the Genie marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs the member plugin bundle, scaffolds your skill overlays, generates `.env.example`, walks you through `config.yaml` + `memory/about-me.md`, and finally (step 7) fans your installed skills out to your other AI harnesses — Codex, Hermes, and the shared `~/.agents/skills` dir (best-effort: this step uses the `genie-essentials` plugin's sync script and prints a hint if that plugin isn't installed).
 
 Then:
 
@@ -97,22 +98,20 @@ Add your keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then
 
 No OS required. Two ways:
 
-**One specific skill** — from [genie-skills-library](https://github.com/Claude-Code-Academy/genie-skills-library):
-
-```bash
-git clone git@github.com:Claude-Code-Academy/genie-skills-library.git
-cp -r genie-skills-library/skills/<skill-name> ~/.claude/skills/
-# start a new Claude Code session
-```
-
-**A themed bundle** — from [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace), inside Claude Code:
+**A themed bundle** (recommended) — inside Claude Code:
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
 /plugin install content-os@genie
 ```
 
-Then start a new session. ➡️ Full details: [skills-and-plugins.md](skills-and-plugins.md)
+**One specific skill** — with Node installed:
+
+```bash
+npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <skill-name>
+```
+
+Either way, start a new session. Installed Genie skills also fan out to Codex, Gemini CLI, Cursor, OpenCode, and Hermes automatically (via `~/.agents/skills` + `~/.hermes/skills`). ➡️ Full details: [skills-and-plugins.md](skills-and-plugins.md#install-once-use-everywhere)
 
 ---
 

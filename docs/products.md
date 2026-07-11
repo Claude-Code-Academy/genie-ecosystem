@@ -29,7 +29,7 @@ Deep dives on the four product repos: the personal OS, the two builder OSes, and
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-`init.py` is idempotent and interactive — it registers the marketplaces, installs your profile's plugin bundles (default **member**; `--profile maintainer` adds internal tooling), scaffolds skill overlays, regenerates `.env.example`, and walks you through `config.yaml`. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`.
+`init.py` is idempotent and interactive (7 steps). It registers the marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs your profile's plugin bundle (default **member**: content-os, coaching, google-workspace, skill-authoring, second-brain; `--profile maintainer` adds internal tooling), scaffolds skill overlays, regenerates `.env.example`, walks you through `config.yaml`, and finally (step 7) fans your installed skills out to your other AI harnesses (Codex, Hermes, `~/.agents/skills`) via `genie-add`'s sync — best-effort: it needs `genie-essentials@genie` installed and prints a hint if skipped. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`.
 
 **Add more skills later:**
 

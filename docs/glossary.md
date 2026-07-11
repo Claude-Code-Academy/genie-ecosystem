@@ -14,7 +14,7 @@ Plain-English definitions of the terms used across the Genie ecosystem.
 | **Marketplace** | A repo Claude Code can install plugins from, via `/plugin marketplace add`. |
 | **Library** | A flat collection of skills you copy by hand (one folder at a time), with no plugin machinery — i.e. `genie-skills-library`. |
 | **Directory** | The reference-only catalog (`genie-directory`) — names, descriptions, when-to-use. No code. |
-| **Bundle** | A themed set of skills inside a marketplace (e.g. `content-creation`). |
+| **Bundle** | A themed set of skills inside a marketplace (e.g. `content-os`). |
 | **MCP (Model Context Protocol)** | The standard that lets Claude talk to external services (Supabase, Stripe, RevenueCat, Playwright, …). OS repos wire these up for you. |
 | **Orchestrator** | A skill that chains other skills in order without reimplementing them — e.g. `genie-app-builder` runs the build pipeline. |
 | **Overlay / PERSONAL.md** | Your private, gitignored customization layer for a skill. You edit `PERSONAL.md` (+ the `references/`, `assets/`, `examples/`, `snippets/` folders); the shared skill is never touched. |
