@@ -48,7 +48,7 @@ One clone, one command:
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-`init.py` is interactive and idempotent (7 steps). It registers the Genie marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs the member plugin bundle, scaffolds your skill overlays, generates `.env.example`, walks you through `config.yaml` + `memory/about-me.md`, and finally (step 7) fans your installed skills out to your other AI harnesses — Codex, Hermes, and the shared `~/.agents/skills` dir.
+`init.py` is interactive and idempotent (7 steps). It registers the Genie marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs the member plugin bundle, scaffolds your skill overlays, generates `.env.example`, walks you through `config.yaml` + `memory/about-me.md`, and finally (step 7) fans your installed skills out to your other AI harnesses — Codex, Hermes, and the shared `~/.agents/skills` dir (best-effort: this step uses the `genie-essentials` plugin's sync script and prints a hint if that plugin isn't installed).
 
 Then:
 

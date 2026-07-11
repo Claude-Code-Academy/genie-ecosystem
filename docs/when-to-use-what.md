@@ -12,7 +12,7 @@ A decision guide for the Genie ecosystem. Start with the goal table, then read t
 | Ship a **web app or SaaS** to production | **genie-web-os** | A full idea→Vercel pipeline (Next.js + Supabase + Stripe + Playwright), one skill per stage. |
 | Ship a **mobile app** to TestFlight | **genie-mobile-os** | A full idea→TestFlight pipeline (Expo + RevenueCat), one skill per stage. |
 | **Rebrand and sell** something already built | **genie-whitelabel** | Finished, working apps released white-label (typically MIT) — take, modify, ship as your own. |
-| Add **one specific skill** across every harness | `npx skills add …@genie-plugin-marketplace` | Installs one skill into all detected harnesses via `~/.agents/skills`; needs Node. |
+| Add **one specific skill** across every harness | `npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <name>` | Installs one skill into all detected harnesses via `~/.agents/skills`; needs Node. |
 | Add **several related skills** in one command, auto-updating | **genie-plugin-marketplace** (the `genie` marketplace) | Themed bundles installed via `/plugin install`, versioned and updatable. |
 | Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** | Cowork is a separate Anthropic-managed store that doesn't share CLI installs; these plugins suit the no-terminal flow. |
 | Use **other people's** Claude Code tools, safely | **genie-curated-marketplace** (live) | Vetted third-party plugins/skills/MCP, pinned to specific reviewed commit SHAs. |

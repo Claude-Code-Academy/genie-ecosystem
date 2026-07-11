@@ -18,7 +18,7 @@ Prereqs: membership in the `Claude-Code-Academy` GitHub org, `gh` CLI authed (`g
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-Restart Claude Code → put API keys in `.env` → done. `init.py` registers the marketplaces, installs the member plugin bundle, scaffolds overlays + `.env`, personalizes config, and fans skills out to the other harnesses (step 7/7). Full walkthrough: [`docs/getting-started.md`](docs/getting-started.md).
+Restart Claude Code → put API keys in `.env` → done. `init.py` registers the marketplaces, installs the member plugin bundle, scaffolds overlays + `.env`, personalizes config, and fans skills out to the other harnesses (step 7/7 — best-effort: it uses the `genie-essentials` plugin's sync script, so if that plugin isn't installed the step prints a hint and is skipped; `/plugin install genie-essentials@genie` then `/genie-add` catches up). Full walkthrough: [`docs/getting-started.md`](docs/getting-started.md).
 
 ## Repo map — "if the user wants X, go to repo Y"
 
@@ -37,7 +37,7 @@ Anthropic's own official marketplace complements these. Deep dives live in [`doc
 ## What lives in this repo
 
 - **`install.py`** — one-command multi-OS installer: clones the OSes you pick and runs each one's own idempotent setup. `--all --yes`, `--dry-run`, `--aios`, etc.
-- **`uninstall.py`** — the exact reverse (`--purge` also deletes installer-created clones). Byte-identical to the canonical copy in genie-aios.
+- **`uninstall.py`** — the exact reverse (`--purge` also deletes installer-created clones). It delegates to each OS clone's own `uninstall.py --all` (that per-OS script is what's kept byte-identical across the OS repos).
 - **`export-skills.py`** — the cross-harness bridge: copies installed Genie skills into `~/.agents/skills/` (Codex/Cursor/OpenCode) and `~/.hermes/skills/`. It **delegates to `genie_sync.py`** (the `genie-add` skill in genie-essentials) when that's installed — same job, kept current by `/plugin update`. See README's install-once section.
 - **`docs/`** — getting-started, when-to-use-what, skills-and-plugins, products, faq, glossary, workflows, genie-profile.
 

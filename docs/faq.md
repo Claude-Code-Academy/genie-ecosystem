@@ -38,7 +38,7 @@ Both come from the `genie` marketplace. **One skill:** `npx skills add Claude-Co
 
 ### Do my Genie skills work in Codex / Gemini CLI / Cursor / Hermes too?
 
-Yes. Installing a Genie plugin in Claude Code fans its skills out to `~/.agents/skills` (Codex, Cursor, OpenCode, Gemini CLI) and `~/.hermes/skills` (Hermes) — `init.py` does it automatically, and the `genie-add` skill keeps it in sync. Restart the other harness to pick up changes. See [skills-and-plugins.md](skills-and-plugins.md#install-once-use-everywhere).
+Yes. Installing a Genie plugin in Claude Code fans its skills out to `~/.agents/skills` (Codex, Cursor, OpenCode, Gemini CLI) and `~/.hermes/skills` (Hermes) — `init.py` does it as its last step (best-effort — it needs the `genie-essentials` plugin installed), and the `genie-add` skill keeps it in sync. Restart the other harness to pick up changes. See [skills-and-plugins.md](skills-and-plugins.md#install-once-use-everywhere).
 
 ### Why won't Claude run the `/plugin` commands for me?
 

@@ -6,13 +6,14 @@ How to add capabilities to Claude Code — and have them follow you into every o
 
 **Quick primer:** a **skill** is a self-contained capability (`SKILL.md` + supporting files) Claude loads when its trigger phrase appears. A **plugin** is a group of related skills installed together. A **marketplace** is a repo Claude Code installs plugins from.
 
-The three Genie marketplaces `init.py` registers:
+The Genie marketplaces (`init.py` registers `genie` + `genie-curated` + `genie-cowork` for members; `genie-internal` is added only with `--profile maintainer`):
 
 | Marketplace | What's in it |
 |---|---|
 | **`genie`** | 8 first-party plugins authored by Claude Code Academy. Home: [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace). |
 | **`genie-curated`** | Vetted third-party plugins/skills/MCP servers, each SHA-pinned. Home: [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace). **Live.** |
-| **`genie-internal`** | Maintainer-only admin tooling. Home: [genie-internal-plugins](https://github.com/Claude-Code-Academy/genie-internal-plugins). |
+| **`genie-internal`** | Maintainer-only admin tooling (not registered for members). Home: [genie-internal-plugins](https://github.com/Claude-Code-Academy/genie-internal-plugins). |
+| **`genie-cowork`** | Plugins packaged for Claude Cowork — see [below](#genie-cowork-plugin-marketplace). Home: [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace). |
 
 Anthropic's own official marketplace complements these.
 
@@ -72,7 +73,7 @@ Installing a `genie` plugin in Claude Code also makes its skills available in **
 
 | Event | What happens |
 |---|---|
-| Fresh clone (`init.py` / `/genie-init`) | Runs `genie_sync.py --all --prune` automatically as its last step (7/7). |
+| Fresh clone (`init.py` / `/genie-init`) | Runs `genie_sync.py --all --prune` as its last step (7/7) — best-effort: needs `genie-essentials@genie` installed, prints a hint if skipped. |
 | Add a plugin | `/genie-add <plugin>` wraps install **and** sync in one move. |
 | Uninstall a plugin | `uninstall.py` runs sync `--all --prune`, removing orphaned exported copies. |
 | After `/plugin update` | Re-run the sync for that plugin (`/genie-add` or `genie_sync.py --plugin <name>@genie`). |
