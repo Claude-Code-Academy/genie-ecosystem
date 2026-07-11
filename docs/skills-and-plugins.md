@@ -1,133 +1,132 @@
 # Skills & plugins
 
-How to add capabilities to Claude Code (and Cowork). Four delivery channels plus a reference catalog — all work in a vanilla session; **none require an OS to be installed**.
+How to add capabilities to Claude Code — and have them follow you into every other AI harness on the machine. Everything here works in a **vanilla Claude Code session**; none of it requires an OS to be installed.
 
-> All repos here are **🔒 members-only**. [Join](https://www.skool.com/claude-code-academy) for access.
+> Repos here are **🔒 members-only**. [Join](https://www.skool.com/claude-code-academy) for access.
 
-**Quick primer:** a **skill** is a self-contained capability Claude loads when its trigger phrase appears. A **plugin / bundle** is a group of related skills installed together. A **marketplace** is a repo Claude Code can install plugins from. A **library** is a flat folder of skills you copy by hand.
+**Quick primer:** a **skill** is a self-contained capability (`SKILL.md` + supporting files) Claude loads when its trigger phrase appears. A **plugin** is a group of related skills installed together. A **marketplace** is a repo Claude Code installs plugins from.
 
----
+The three Genie marketplaces `init.py` registers:
 
-## genie-skills-library
+| Marketplace | What's in it |
+|---|---|
+| **`genie`** | 8 first-party plugins authored by Claude Code Academy. Home: [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace). |
+| **`genie-curated`** | Vetted third-party plugins/skills/MCP servers, each SHA-pinned. Home: [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace). **Live.** |
+| **`genie-internal`** | Maintainer-only admin tooling. Home: [genie-internal-plugins](https://github.com/Claude-Code-Academy/genie-internal-plugins). |
 
-**The flat, copy-one-skill-at-a-time catalog.** Each skill is self-contained under `skills/<name>/`. Drop a folder into `~/.claude/skills/` (global) or `<project>/.claude/skills/` (project-scoped) and it works in any session — no plugin machinery.
-
-**Manual install — one skill:**
-
-```bash
-git clone git@github.com:Claude-Code-Academy/genie-skills-library.git
-cp -r genie-skills-library/skills/<skill-name> ~/.claude/skills/
-# open a NEW Claude Code session — skills load at startup
-```
-
-**Everything at once:** `cp -r genie-skills-library/skills/* ~/.claude/skills/` — every folder is independent.
-**Update:** `git pull`, then re-copy the skill(s) you use.
-**Uninstall:** `rm -rf ~/.claude/skills/<skill-name>`.
-
-**Or just ask Claude:** *"Install the `<skill>` skill from `Claude-Code-Academy/genie-skills-library` — clone to a temp folder, copy it into `~/.claude/skills/`, and tell me if it needs any API keys."*
-
-**Use it when** you want exactly one skill, or you want to read/tweak the source before installing.
+Anthropic's own official marketplace complements these.
 
 ---
 
-## genie-plugin-marketplace
+## genie-plugin-marketplace — the `genie` bundles
 
-**Themed bundles for Claude Code**, installed in one command and auto-updating. Skill content is identical to the library — the marketplace just ships them grouped, versioned, and updatable. Same bundles work in the **terminal (CLI)** and the **Claude Code desktop app**; pick whichever surface you live in.
-
-Every install is the same two moves: **(1) add the marketplace once, then (2) install the bundle.** The marketplace name is `genie`. We'll use the `genie-essentials` bundle as the worked example.
+**Themed bundles for Claude Code**, installed in one command and auto-updating. Two moves: **(1) add the marketplace once, then (2) install the bundle.** The marketplace name is `genie`.
 
 ### In the terminal (Claude Code CLI)
-
-**Fast path — type the commands** (inside a Claude Code session):
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
 /plugin install genie-essentials@genie
 ```
 
-**Or use the menu** — run `/plugin` (note: **singular**, not `/plugins`) to open the plugin manager. It has four tabs — **Discover · Installed · Marketplaces · Errors** (move with `Tab` / `Shift+Tab`):
+Or run `/plugin` (note: **singular**) to open the plugin manager — tabs **Discover · Installed · Marketplaces · Errors** (move with `Tab` / `Shift+Tab`): add the marketplace under **Marketplaces**, install from **Discover**, then run **`/reload-plugins`** (or start a new session) to activate.
 
-1. Go to the **Marketplaces** tab → add `Claude-Code-Academy/genie-plugin-marketplace` (one-time).
-2. Switch to **Discover**, find the `genie-essentials` bundle, press **Enter** to install.
-3. Run **`/reload-plugins`** to activate it in the current session — or just start a new session. The `genie-find-skills` skill is then available; trigger it with `/genie-find-skills` or by asking "find me a skill for X".
+### In the Claude Code desktop app (Code tab)
 
-### In the Claude Code desktop app
+Same thing via GUI: click the **`+`** next to the prompt box → **Plugins** → **Add plugin**, add `Claude-Code-Academy/genie-plugin-marketplace`, find the bundle, install. Use **Manage plugins** to enable/disable/uninstall.
 
-The desktop app does the same thing through a GUI — no commands to type:
+> The `+` → **Plugins** option appears in **local and SSH sessions only**, not cloud sessions.
 
-1. Click the **`+` button** next to the prompt box → choose **Plugins**.
-2. Click **Add plugin** to open the marketplace browser, and add the marketplace `Claude-Code-Academy/genie-plugin-marketplace` (one-time).
-3. Find the **`genie-essentials`** bundle in the browser and install it. Use **Manage plugins** later to enable, disable, or uninstall.
-4. Changes apply to the current session (or run `/reload-plugins`); the skill is then available the same way as in the terminal.
+### Manage & update
 
-> The `+` → **Plugins** option appears in **local and SSH sessions only** — not cloud sessions. Plugins install per scope (user / project / local), user scope being the default.
+`/plugin update <bundle>` (or `/plugin update` for all), `/plugin uninstall <bundle>`, `/plugin list`, `/plugin marketplace list`.
 
-### Manage & update (either surface)
+> Slash commands must be typed by **you** — Claude can't fire `/plugin` on your behalf. But it can print the exact commands and help you fill in `.env` after.
 
-Update with `/plugin update genie-essentials` (or `/plugin update` for all). Remove with `/plugin uninstall genie-essentials`. List what's installed with `/plugin list`; list marketplaces with `/plugin marketplace list`.
+### The 8 bundles
 
-> Slash commands have to be typed by you — Claude can't fire `/plugin` on your behalf. But you can ask Claude to *print the exact commands* and help you fill in `.env` afterward.
-
-**Available bundles:**
-
-| Bundle | Skills |
+| Bundle | What it does |
 |---|---|
-| `genie-essentials` | `genie-find-skills` |
-| `content-creation` | `youtube-script`, `youtube-metadata`, `tiktok-metadata`, `instagram-reels-script`, `instagram-reels-metadata`, `transcript-cleanup`, `descript`, `course-chapter-creator`, `instagram-carousel`, `blotato-publish` |
-| `coaching` | `coaching-plan`, `excalidraw` |
-| `google-workspace` | `google-workspace-setup`, `md-to-gdoc` |
-| `skill-authoring` | `skill-scanner`, `get-experience` |
-| `second-brain` | `create-obsidian-brain`, `update-obsidian-brain` |
+| `genie-essentials` | Baseline utilities every member should have: `genie-find-skills`, `genie-goalify` (ramble → one paste-ready goal), `genie-setup-lite` (wire API keys), and `genie-add` (install a plugin **and** sync it to every harness). |
+| `content-os` | The content plugin: turns moments captured in your Content OS vault into on-brand IG posts, carousels, reel scripts, LinkedIn/X posts & threads, YouTube/TikTok scripts & metadata, and repurpose packs — with Descript editing, Blotato publishing, and a competitor-intel + web-scan loop. |
+| `coaching` | 1-to-1 Claude Code coaching plans and Excalidraw diagrams. |
+| `google-workspace` | Google Drive/Docs auth setup and Markdown → Google Doc conversion. |
+| `skill-authoring` | Meta-tools for building and sanitizing your own Claude Code skills. |
+| `second-brain` | Create and maintain a self-maintaining Obsidian knowledge vault an AI agent keeps current. |
+| `ios-app-pipeline` | Verified iOS app pipeline: Xcode setup, Simulator runtime repair, SwiftUI smoke-test build, install/launch, and screenshot proof. |
+| `website-analytics` | Behaviour analytics for any site via Microsoft Clarity: bundles Clarity's official MCP plus `clarity-connect` (install + verify the tag) and `clarity-insights` (query funnel drop-off / what to fix). |
 
 Install as many as you want — no overlap, and a bundle only adds context for the skills it contains (progressive disclosure loads a skill's full body only when triggered).
 
-**Use it when** you want a use-case set in one shot, kept up to date automatically.
+---
+
+## Install once, use everywhere
+
+Installing a `genie` plugin in Claude Code also makes its skills available in **Codex** (CLI, desktop app, IDE — one shared `~/.codex`), **Gemini CLI**, **Cursor**, **OpenCode**, and **Hermes** — without reinstalling per tool. This is done by `genie_sync.py`, the engine behind the **`genie-add`** skill in `genie-essentials`:
+
+- Skills fan out to **`~/.agents/skills`** (the open [agentskills.io](https://agentskills.io) directory, scanned by Codex/Cursor/OpenCode) and **`~/.hermes/skills`**, each stamped with a `.genie-export.json` provenance marker so a sync never touches a skill you wrote by hand.
+- Plugins that bundle an **MCP server** additionally register as real Codex plugins (a local marketplace at `~/.genie/codex-marketplace` + `codex plugin add`).
+- **Restart the other harness** (Codex / a fresh Hermes session) to pick up changes. Claude Code already has them.
+
+**Lifecycle — when sync runs:**
+
+| Event | What happens |
+|---|---|
+| Fresh clone (`init.py` / `/genie-init`) | Runs `genie_sync.py --all --prune` automatically as its last step (7/7). |
+| Add a plugin | `/genie-add <plugin>` wraps install **and** sync in one move. |
+| Uninstall a plugin | `uninstall.py` runs sync `--all --prune`, removing orphaned exported copies. |
+| After `/plugin update` | Re-run the sync for that plugin (`/genie-add` or `genie_sync.py --plugin <name>@genie`). |
+
+**Claude Desktop:** the **Code tab** shares your CLI installs automatically. **Cowork does not** — it's a separate Anthropic-managed store (a known limitation). Use the Code tab; the cross-harness sync can also feed Cowork-side agents via `~/.agents/skills`.
+
+**Credentials once:** every Genie skill checks the current folder's `.env` (walking up), then falls back to `~/.claude/genie/.env`. Fill that one file and skills work from any folder and any surface.
+
+---
+
+## Per-skill install (just one skill)
+
+Want a single skill, not a whole bundle — or you're a non-genie harness user? Use the `skills` CLI (**requires Node**):
+
+```bash
+npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <skill-name>
+```
+
+It installs that one skill across every detected harness via `~/.agents/skills` symlinks. If `command -v node` prints nothing, install the plugin bundle instead (no Node needed).
+
+> The flat [genie-skills-library](https://github.com/Claude-Code-Academy/genie-skills-library) repo remains the internal source of truth for skill content. Members don't need to clone it — the `npx skills` path above (or a bundle install) is the supported way in. Clone it only if you want to read or tweak a skill's source.
+
+---
+
+## genie-curated-marketplace — vetted third-party tools
+
+**Live.** Plugins, standalone skills, and MCP servers authored by *other people*, re-published by reference with attribution — currently ~a dozen entries (e.g. `mattpocock-skills`, `paper-search`, `mermaid`, `kanban`, `cloudflare-api`). Each entry is a pointer pinned to a specific **reviewed commit SHA**, not a re-hosted copy.
+
+```
+/plugin marketplace add Claude-Code-Academy/genie-curated-marketplace
+/plugin install <plugin>@genie-curated
+```
+
+**The SHA pin is the contract:** when an upstream pushes new commits, you keep the previously-reviewed commit until a maintainer re-vets and bumps the pin. No surprise updates. Kept deliberately separate from `genie-plugin-marketplace` (which holds CCA's *own* skills). Full curation rules live in that repo's `CLAUDE.md` / `README.md`.
 
 ---
 
 ## genie-cowork-plugin-marketplace
 
-**The same idea, for Claude Cowork** (Claude Desktop's chat-first knowledge-work mode). Same plugin format, tuned for the no-terminal desktop flow (outputs folder, drag-and-drop, the Directory UI).
-
-**Install:** register the marketplace once in the **Claude Code CLI** —
+The same idea, packaged for **Claude Cowork** (the chat-first desktop mode that does not share CLI installs). Register once in the CLI —
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-cowork-plugin-marketplace
 ```
 
-— then in **Cowork**: open **Directory → Plugins → Code**, click the **`genie-cowork`** chip, hit **+** on the plugin you want, and restart Cowork. *(First plugins are on the way.)*
-
-**Use it when** you're working in Cowork rather than the CLI.
-
----
-
-## genie-curated-marketplace
-
-**Vetted third-party tools** — plugins, standalone skills, and MCP servers authored by *other people*, re-published with permission and attribution. Each entry is a pointer pinned to a specific **reviewed commit SHA**, not a re-hosted copy.
-
-**The SHA pin is the contract:** when an upstream pushes new commits, you keep using the previously-reviewed commit until a maintainer re-vets and bumps the pin. No surprise updates. Members install **one** marketplace and get the whole curated set.
-
-**Use it when** you want the broader community's tools but want them vetted first. Kept deliberately separate from `genie-plugin-marketplace` (which holds CCA's *own* skills).
-
----
-
-## genie-directory
-
-**Reference-only.** No code, no copies, no manifests — just names, descriptions, and "when to use it" notes so you can find the right thing fast and install it from its real home.
-
-- **SKILLS.md** — every individual skill, what it does, where it lives.
-- **PLUGINS.md** — every bundle and which skills it contains.
-- **MARKETPLACES.md** — each marketplace and its install command.
-
-**Use it when** you know you want *something* but need to look up the exact name or source.
+— then in **Cowork**: **Directory → Plugins → Code**, click the **`genie-cowork`** chip, hit **+** on the plugin you want, and restart Cowork. *(Catalog is filling in; for CLI/Code-tab work the `genie` marketplace above is the primary path.)*
 
 ---
 
 ## Setting credentials
 
-Skills that need API keys ship an `env.example` showing exactly which keys.
+Skills that need API keys ship an `env.example` naming the keys.
 
-1. **Vanilla Claude Code / Cowork (no Genie):** copy the keys you need into your project's `.env`, or export them in your shell. Skills read from the process environment.
-2. **Inside a Genie repo:** run `python setup.py` (or `/genie-setup` mid-session). It scans every installed plugin's `env.example`, concatenates them into one labeled `.env.example` at the repo root, and seeds `.env`. Re-run after every install/update.
+1. **Vanilla Claude Code / Cowork (no Genie):** install `genie-essentials@genie` and say *"set up my keys"* (the `genie-setup-lite` skill) — it aggregates every installed plugin's declared keys into `~/.claude/genie/.env.example`, seeds `~/.claude/genie/.env`, and `--check` shows what's still missing.
+2. **Inside a Genie repo:** run `/genie-setup` (`python setup.py`). Same aggregation into the repo-root `.env`, plus personal overlays, and it links `~/.claude/genie/.env` to the repo's `.env` so both stay one file. Re-run after every install/update.
 
 Always gitignore your `.env`.

@@ -27,7 +27,17 @@ This is the **mother repo** for the Genie ecosystem. It owns no product code —
 
 ## Install everything in one command
 
-Members: clone this repo, run one script, and pick what you want — it clones the OSes you choose and runs each one's own idempotent setup.
+**Prerequisites:** membership in the `Claude-Code-Academy` GitHub org, the `gh` CLI authenticated (`gh auth login`), plus `git`, `python3`, and the `claude` CLI on your PATH.
+
+**Just want the personal OS?** That's the common path — clone genie-aios and run its setup:
+
+```bash
+gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
+```
+
+Then restart Claude Code, put your API keys in `.env`, and you're working. See [docs/getting-started.md](docs/getting-started.md).
+
+**Want several OSes at once?** Clone this repo, run one script, and pick what you want — it clones the OSes you choose and runs each one's own idempotent setup.
 
 ```bash
 gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
@@ -46,7 +56,7 @@ python3 uninstall.py --purge    # ...and deletes the clones the installer create
 
 Your `.env` files, `PERSONAL.md` overlays, and built projects always survive an uninstall. `--purge` only ever deletes clones the installer itself created, and refuses to touch any clone with uncommitted changes or user data (`.env`, `projects/`, `outputs/`) unless you add `--force`. After installing, add plugins à la carte any time: `/plugin install <name>@genie`.
 
-Using Codex or Hermes too? `python3 export-skills.py` copies every installed Genie skill into `~/.agents/skills/` (Codex's scan path) and `~/.hermes/skills/` — same SKILL.md format, no conversion. Keys live once in `~/.claude/genie/.env` and every surface finds them.
+**Install once, use everywhere.** Installing a Genie plugin in Claude Code also makes its skills available in **Codex** (CLI + desktop + IDE), **Gemini CLI**, **Cursor**, **OpenCode**, and **Hermes** — no reinstall per tool. `init.py` does the fan-out automatically on a fresh clone (step 7/7); afterwards the `genie-add` skill (in the `genie-essentials` plugin) keeps it in sync, and `python3 export-skills.py` here is the standalone bridge that does the same job. Skills land in `~/.agents/skills/` (the open [agentskills.io](https://agentskills.io) dir, which Codex/Cursor/OpenCode scan) and `~/.hermes/skills/`; plugins that bundle an MCP server also register in Codex. **Restart the other harness** to pick up changes. Keys live once in `~/.claude/genie/.env` and every surface finds them. Claude Desktop's **Code tab** shares CLI installs automatically; **Cowork** does not (a known Anthropic limitation — use the Code tab, or let the sync feed Cowork via `~/.agents/skills`). Full detail: [docs/skills-and-plugins.md](docs/skills-and-plugins.md#install-once-use-everywhere).
 
 ---
 
@@ -72,11 +82,10 @@ The ecosystem fans out from that core idea into three layers:
 | Build & ship a **web app / SaaS** (Next.js + Supabase + Stripe → Vercel) | **genie-web-os** 🔒 | [products](docs/products.md#genie-web-os) |
 | Build & ship a **mobile app** (Expo → TestFlight) | **genie-mobile-os** 🔒 | [products](docs/products.md#genie-mobile-os) |
 | Take a **finished app**, rebrand it, and sell it | **genie-whitelabel** 🔒 | [products](docs/products.md#genie-whitelabel) |
-| Add **one specific skill** to any Claude Code session | **genie-skills-library** 🔒 | [skills & plugins](docs/skills-and-plugins.md#genie-skills-library) |
-| Install a **themed bundle of skills** in one command | **genie-plugin-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md#genie-plugin-marketplace) |
-| Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md#genie-cowork-plugin-marketplace) |
-| Install **vetted third-party** tools (SHA-pinned, reviewed) | **genie-curated-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md#genie-curated-marketplace) |
-| Just **look up** a skill/plugin by name | **genie-directory** 🔒 | [skills & plugins](docs/skills-and-plugins.md#genie-directory) |
+| Install a **themed bundle of skills** in one command | **genie-plugin-marketplace** (the `genie` marketplace) 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
+| Add **one specific skill** across every harness | `npx skills add …@genie-plugin-marketplace` | [skills & plugins](docs/skills-and-plugins.md) |
+| Install **vetted third-party** tools (SHA-pinned, reviewed) | **genie-curated-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
+| Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
 
 Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobile OS, library vs marketplace): **[docs/when-to-use-what.md](docs/when-to-use-what.md)**.
 
@@ -98,9 +107,9 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 | Repo | What it is | Access |
 |---|---|---|
 | [genie-skills-library](https://github.com/Claude-Code-Academy/genie-skills-library) | Flat, copy-one-skill-at-a-time library. Drop a folder into `~/.claude/skills/`. | 🔒 Members |
-| [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace) | Themed skill bundles for Claude Code CLI, installable via `/plugin install`. | 🔒 Members |
+| [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace) | The `genie` marketplace: **8 first-party plugins** (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, website-analytics). Also the authoring home for all of them. | 🔒 Members |
 | [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace) | The same idea for **Claude Cowork** (desktop knowledge-work mode). | 🔒 Members |
-| [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace) | Vetted third-party plugins/skills/MCP servers, pinned to reviewed commits. | 🔒 Members |
+| [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace) | **Live** catalog (~a dozen entries) of vetted third-party plugins/skills/MCP servers, each pinned to a reviewed commit SHA. | 🔒 Members |
 | [genie-directory](https://github.com/Claude-Code-Academy/genie-directory) | Reference-only catalog — names, descriptions, when-to-use. No code. | 🔒 Members |
 
 ### Public — open to everyone

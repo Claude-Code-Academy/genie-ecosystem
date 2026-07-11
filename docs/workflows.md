@@ -45,14 +45,14 @@ End-to-end recipes that combine the pieces. Each one names the repos involved an
 
 ---
 
-## Add content-creation superpowers to any session
+## Add content superpowers to any session
 
-**Goal:** YouTube/TikTok/Reels scripts & metadata, transcript cleanup, Descript edits — no OS needed.
+**Goal:** YouTube/TikTok/Reels scripts & metadata, carousels, transcript cleanup, Descript edits — no OS needed.
 **Repos:** `genie-plugin-marketplace`.
 
 ```
 /plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
-/plugin install content-creation@genie
+/plugin install content-os@genie
 ```
 
 Start a new session, then trigger by phrase (e.g. *"write a YouTube script about…"*). Update with `/plugin update`.
@@ -87,4 +87,4 @@ Start a new session, then trigger by phrase (e.g. *"write a YouTube script about
 **Goal:** install community tooling that's been reviewed.
 **Repos:** `genie-curated-marketplace`.
 
-Add the curated marketplace once, then install entries from it like any plugin. You only ever get the commit SHAs Claude Code Academy has reviewed — see [skills-and-plugins.md → genie-curated-marketplace](skills-and-plugins.md#genie-curated-marketplace).
+Add the curated marketplace once, then install entries from it like any plugin. The catalog is **live** (~a dozen vetted entries), and you only ever get the commit SHAs Claude Code Academy has reviewed — see [skills-and-plugins.md](skills-and-plugins.md#genie-curated-marketplace--vetted-third-party-tools).

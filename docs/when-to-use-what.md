@@ -12,11 +12,10 @@ A decision guide for the Genie ecosystem. Start with the goal table, then read t
 | Ship a **web app or SaaS** to production | **genie-web-os** | A full idea→Vercel pipeline (Next.js + Supabase + Stripe + Playwright), one skill per stage. |
 | Ship a **mobile app** to TestFlight | **genie-mobile-os** | A full idea→TestFlight pipeline (Expo + RevenueCat), one skill per stage. |
 | **Rebrand and sell** something already built | **genie-whitelabel** | Finished, working apps released white-label (typically MIT) — take, modify, ship as your own. |
-| Add **one capability** to a vanilla Claude Code session | **genie-skills-library** | Copy a single self-contained skill folder; no plugin machinery, no OS needed. |
-| Add **several related skills** in one command, auto-updating | **genie-plugin-marketplace** | Themed bundles installed via `/plugin install`, versioned and updatable. |
-| Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** | Cowork is a different surface; these plugins suit the no-terminal flow. |
-| Use **other people's** Claude Code tools, safely | **genie-curated-marketplace** | Vetted third-party plugins/skills/MCP, pinned to specific reviewed commits. |
-| Just **find** the right skill/plugin by name | **genie-directory** | Reference-only catalog — descriptions and when-to-use, links to the real source. |
+| Add **one specific skill** across every harness | `npx skills add …@genie-plugin-marketplace` | Installs one skill into all detected harnesses via `~/.agents/skills`; needs Node. |
+| Add **several related skills** in one command, auto-updating | **genie-plugin-marketplace** (the `genie` marketplace) | Themed bundles installed via `/plugin install`, versioned and updatable. |
+| Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** | Cowork is a separate Anthropic-managed store that doesn't share CLI installs; these plugins suit the no-terminal flow. |
+| Use **other people's** Claude Code tools, safely | **genie-curated-marketplace** (live) | Vetted third-party plugins/skills/MCP, pinned to specific reviewed commit SHAs. |
 
 ---
 
@@ -39,19 +38,20 @@ All three are "Genie," but they solve different jobs and **install differently**
 
 ---
 
-## Library vs marketplace: how should I install skills?
+## Single skill vs bundle: how should I install skills?
 
-Same skills, different delivery.
+Same skills, different delivery — both from the `genie` marketplace, both installing across every detected harness.
 
-| | genie-skills-library | genie-plugin-marketplace |
+| | Single skill | Plugin bundle |
 |---|---|---|
-| **Unit** | One skill folder | A themed bundle of skills |
-| **Install** | `cp -r skills/<name> ~/.claude/skills/` | `/plugin install <bundle>@genie` |
-| **Updates** | Manual (`git pull` + re-copy) | `/plugin update` |
-| **Best when** | You want exactly one skill, or to read/tweak the source | You want a use-case set in one shot, auto-updating |
+| **Unit** | One skill | A themed bundle of skills |
+| **Install** | `npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <name>` (needs Node) | `/plugin install <bundle>@genie` |
+| **Updates** | Re-run `npx skills add` | `/plugin update` |
+| **Cross-harness** | Yes — installs into `~/.agents/skills` | Yes — `init.py` / `/genie-add` fans it out |
+| **Best when** | You want exactly one skill | You want a whole use-case set in one shot |
 | **Needs the OS?** | No | No |
 
-> Both work in plain Claude Code — you don't need Genie installed. Inside a Genie repo, run `/genie-setup` after installing so credentials get wired into `.env.example`.
+> Both work in plain Claude Code — you don't need Genie installed. Inside a Genie repo, run `/genie-setup` after installing so credentials get wired into `.env`. The flat `genie-skills-library` repo is the internal source of truth for skill content; members install via the two paths above, not by cloning it.
 
 **CLI vs Cowork:** `genie-plugin-marketplace` is for the **Claude Code CLI**. If you're in **Claude Cowork** (Claude Desktop's knowledge-work mode), use `genie-cowork-plugin-marketplace` instead — same plugin format, tuned for the chat-first desktop flow.
 
