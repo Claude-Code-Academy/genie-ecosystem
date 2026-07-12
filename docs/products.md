@@ -85,7 +85,7 @@ python3 init.py            # installs the Web OS as a GLOBAL plugin + registers 
 
 Add your keys to the generated `.env` (only the stages you'll hit — see `docs/env-setup-guide.md`), re-run `python3 init.py` to wire the MCP servers (**Supabase, Stripe, Playwright, Context7**), **restart Claude Code**, then from any folder: *"I have an idea for a SaaS…"*
 
-Skills install globally as `genie-web-os:<skill>` (e.g. `genie-web-os:supabase`), so they're always available and never collide with another Genie OS. Tear it all down cleanly with `python3 uninstall.py` (or `/genie-uninstall`) — it leaves your `.env` and built apps untouched.
+Skills install globally as `genie-web-os:<skill>` (e.g. `genie-web-os:supabase`), so they're always available and never collide with another Genie OS. Tear it all down cleanly with `python3 uninstall.py` (or `/genie-uninstall`) — it backs up your `.env`, memory, and skill overlays to `~/.genie/backups/web-os-<timestamp>/` before removing anything (`outputs/` is not backed up), and leaves your `.env` and built apps untouched in the clone.
 
 **Back-half skills:** `nextjs-web-setup` (Next.js 15 + TS + Tailwind + shadcn/ui), `design-system` (tokens, theming, page templates, screenshot-verified via Playwright), `supabase` (auth + Postgres + RLS + storage), `stripe` (checkout, portal, webhooks, subscriptions).
 
@@ -111,7 +111,7 @@ cd genie-mobile-os
 python3 init.py            # installs the Mobile OS as a GLOBAL plugin + wires the RevenueCat MCP
 ```
 
-Add keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then from any folder: *"I have an idea for an app…"* Skills install globally as `genie-mobile-os:<skill>`. Clean removal via `python3 uninstall.py` (or `/genie-uninstall`).
+Add keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then from any folder: *"I have an idea for an app…"* Skills install globally as `genie-mobile-os:<skill>`. Clean removal via `python3 uninstall.py` (or `/genie-uninstall`) — it backs up your `.env`, memory, and skill overlays to `~/.genie/backups/mobile-os-<timestamp>/` before removing anything (`outputs/` is not backed up).
 
 **Back-half skills:** `expo-mobile-setup` (Expo Router + NativeWind + Zustand + TanStack Query; app base cloned from the public [expo-revenuecat-claude-starter](https://github.com/Claude-Code-Academy/expo-revenuecat-claude-starter)), `supabase`, `revenuecat` (SDK, paywall, entitlements), `subscription-products` (programmatic IAP in App Store Connect + RevenueCat).
 
