@@ -62,7 +62,7 @@ Run `/genie-uninstall` (or `python3 uninstall.py`) first rather than deleting by
 
 ### What's the trust prompt / banner I see when I start a fresh Genie session?
 
-That's expected — Genie ships a `SessionStart` hook (in each OS repo) that prints a one-line brand + version banner at the top of every session, plus an update nudge if one's available. Claude Code asks you to trust a new hook the first time it runs; approve it. There's also an optional terminal splash (outside Claude Code, for a raw `claude`/`codex` shell) — opt in with `python3 scripts/install_shell_banner.py` from an OS clone (zsh only).
+That's expected — Genie ships a `SessionStart` hook (in genie-aios, for now) that prints a one-line brand + version banner at the top of every session, plus an update nudge if one's available. Claude Code asks you to trust a new hook the first time it runs; approve it. There's also an optional terminal splash (outside Claude Code, for a raw `claude`/`codex` shell) — opt in with `python3 scripts/install_shell_banner.py` from your genie-aios clone (zsh only).
 
 ### CLI vs Cowork — does it matter?
 

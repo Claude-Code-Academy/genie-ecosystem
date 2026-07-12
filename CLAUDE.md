@@ -18,7 +18,7 @@ Prereqs: membership in the `Claude-Code-Academy` GitHub org, `gh` CLI authed (`g
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-Restart Claude Code → put API keys in `.env` → done. `init.py` registers the marketplaces, installs the member plugin bundle, scaffolds overlays + `.env`, personalizes config, and fans skills out to the other harnesses (step 7/7 — best-effort: it uses the `genie-essentials` plugin's sync script, so if that plugin isn't installed the step prints a hint and is skipped; `/plugin install genie-essentials@genie` then `/genie-add` catches up). Full walkthrough: [`docs/getting-started.md`](docs/getting-started.md).
+Restart Claude Code → put API keys in `.env` → done. `init.py` registers the marketplaces, installs the member plugin bundle, restores any previous Genie backup, scaffolds overlays + `.env`, personalizes config, and fans skills out to the other harnesses (step 8/8 — best-effort: it uses the `genie-essentials` plugin's sync script, so if that plugin isn't installed the step prints a hint and is skipped; `/plugin install genie-essentials@genie` then `/genie-add` catches up). Full walkthrough: [`docs/getting-started.md`](docs/getting-started.md).
 
 ## Repo map — "if the user wants X, go to repo Y"
 

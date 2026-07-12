@@ -76,7 +76,7 @@ Installing a `genie` plugin in Claude Code also makes its skills available in **
 
 | Event | What happens |
 |---|---|
-| Fresh clone (`init.py` / `/genie-init`) | Runs `genie_sync.py --all --prune` as its last step (7/7) — best-effort: needs `genie-essentials@genie` installed, prints a hint if skipped. |
+| Fresh clone (`init.py` / `/genie-init`) | Runs `genie_sync.py --all --prune` as its last step (8/8) — best-effort: needs `genie-essentials@genie` installed, prints a hint if skipped. |
 | Add a plugin | `/genie-add <plugin>` wraps install **and** sync in one move. |
 | Uninstall a plugin | `uninstall.py` runs sync `--all --prune`, removing orphaned exported copies. |
 | After `/plugin update` | Re-run the sync for that plugin (`/genie-add` or `genie_sync.py --plugin <name>@genie`). |
