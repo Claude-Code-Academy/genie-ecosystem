@@ -54,9 +54,24 @@ python3 uninstall.py            # removes every plugin/marketplace/MCP server Ge
 python3 uninstall.py --purge    # ...and deletes the clones the installer created
 ```
 
-Your `.env` files, `PERSONAL.md` overlays, and built projects always survive an uninstall. `--purge` only ever deletes clones the installer itself created, and refuses to touch any clone with uncommitted changes or user data (`.env`, `projects/`, `outputs/`) unless you add `--force`. After installing, add plugins à la carte any time: `/plugin install <name>@genie`.
+Your `.env` files, `PERSONAL.md` overlays, and built projects always survive an uninstall. `--purge` only ever deletes clones the installer itself created, and refuses to touch any clone with uncommitted changes or user data (`.env`, `projects/`, `outputs/`) unless you add `--force`. Before it touches anything, each OS's own uninstall now backs up your `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/<os>-<timestamp>/` — after that, the clone is genuinely safe to delete by hand too (note: `outputs/` is **not** backed up, since it can be huge). Restore happens automatically the next time you run `python3 init.py` on a fresh clone (it offers to restore from the latest backup; `--yes` auto-restores). After installing, add plugins à la carte any time: `/plugin install <name>@genie`.
 
 **Install once, use everywhere.** Installing a Genie plugin in Claude Code also makes its skills available in **Codex** (CLI + desktop + IDE), **Gemini CLI**, **Cursor**, **OpenCode**, and **Hermes** — no reinstall per tool. `init.py` does the fan-out on a fresh clone (step 7/7 — best-effort: it needs the `genie-essentials` plugin installed and prints a hint if the step was skipped); afterwards the `genie-add` skill (in the `genie-essentials` plugin) keeps it in sync, and `python3 export-skills.py` here is the standalone bridge that does the same job. Skills land in `~/.agents/skills/` (the open [agentskills.io](https://agentskills.io) dir, which Codex/Cursor/OpenCode scan) and `~/.hermes/skills/`; plugins that bundle an MCP server also register in Codex. **Restart the other harness** to pick up changes. Keys live once in `~/.claude/genie/.env` and every surface finds them. Claude Desktop's **Code tab** shares CLI installs automatically; **Cowork** does not (a known Anthropic limitation — use the Code tab, or let the sync feed Cowork via `~/.agents/skills`). Full detail: [docs/skills-and-plugins.md](docs/skills-and-plugins.md#install-once-use-everywhere).
+
+---
+
+## Keep it updated
+
+**Genie itself** (the OS repo) updates from inside each clone:
+
+```bash
+python3 update.py            # fetch + fast-forward pull + re-run setup, in one step
+python3 update.py --check    # just check whether an update is available — changes nothing
+```
+
+Or from chat: `/genie-update`. If your tree has local edits that conflict with the pull, `update.py` tells you exactly which files and how to stash/pull/pop — it never force-resets your changes.
+
+**Plugin bundles** update separately, since they come from the marketplace, not the repo: `/plugin marketplace update genie` refreshes the catalog, then `/plugin update <bundle>` (or `/plugin update` for all installed bundles).
 
 ---
 
@@ -107,10 +122,11 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 | Repo | What it is | Access |
 |---|---|---|
 | [genie-skills-library](https://github.com/Claude-Code-Academy/genie-skills-library) | Flat, copy-one-skill-at-a-time library. Drop a folder into `~/.claude/skills/`. | 🔒 Members |
-| [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace) | The `genie` marketplace: **8 first-party plugins** (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, website-analytics). Also the authoring home for all of them. | 🔒 Members |
+| [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace) | The `genie` marketplace: **9 first-party plugins** (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, skool-os, website-analytics). Also the authoring home for all of them. | 🔒 Members |
 | [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace) | The same idea for **Claude Cowork** (desktop knowledge-work mode). | 🔒 Members |
 | [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace) | **Live** catalog (~a dozen entries) of vetted third-party plugins/skills/MCP servers, each pinned to a reviewed commit SHA. | 🔒 Members |
 | [genie-directory](https://github.com/Claude-Code-Academy/genie-directory) | Reference-only catalog — names, descriptions, when-to-use. No code. | 🔒 Members |
+| [genie-second-brain](https://github.com/Claude-Code-Academy/genie-second-brain) | Setup kit + reference spec for a self-syncing, self-maintaining Obsidian "second brain" shared across your devices and AI agents — companion to the Second Brain course. **Not the same thing as the `second-brain` plugin** above: that plugin is the *skills* (create/maintain the vault from inside Claude Code); this repo is the Git-sync plumbing + course material underneath it. | 🔒 Members |
 
 ### Public — open to everyone
 

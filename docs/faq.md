@@ -52,6 +52,18 @@ Skills load at **session start**. Open a **new** Claude Code session after insta
 
 Each skill ships an `env.example` listing the keys it needs. In a vanilla session, put them in your project's `.env` (or your shell). Inside a Genie repo, run `python setup.py` / `/genie-setup` to collect every installed skill's keys into one `.env.example`. Always gitignore `.env`.
 
+### How do I update Genie?
+
+Two different things update separately. **Genie itself** (the OS repo — config, memory, `init.py`/`setup.py` logic) updates from inside the clone: `python3 update.py` (fetches, fast-forward pulls, re-runs setup) or `python3 update.py --check` to just see if you're behind. From chat, say *"update Genie"* or run `/genie-update`. **Plugin bundles** (content-os, coaching, etc.) come from the marketplace, not the repo — update those with `/plugin marketplace update genie` (refreshes the catalog) then `/plugin update <bundle>` (or `/plugin update` for all).
+
+### Is it safe to just delete a Genie clone? How do I uninstall cleanly?
+
+Run `/genie-uninstall` (or `python3 uninstall.py`) first rather than deleting by hand — it removes exactly what `init.py` added (plugins, marketplaces, skills, MCP servers) and, before touching anything, backs up your `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/<os>-<timestamp>/`. (`outputs/` is deliberately **not** backed up — it can be huge; grab anything you want from it first.) Once that backup exists, the clone genuinely is safe to delete. Re-cloning later and running `python3 init.py` detects the backup and offers to restore it automatically (`--yes` auto-restores).
+
+### What's the trust prompt / banner I see when I start a fresh Genie session?
+
+That's expected — Genie ships a `SessionStart` hook (in each OS repo) that prints a one-line brand + version banner at the top of every session, plus an update nudge if one's available. Claude Code asks you to trust a new hook the first time it runs; approve it. There's also an optional terminal splash (outside Claude Code, for a raw `claude`/`codex` shell) — opt in with `python3 scripts/install_shell_banner.py` from an OS clone (zsh only).
+
 ### CLI vs Cowork — does it matter?
 
 Yes. `genie-plugin-marketplace` targets the **Claude Code CLI** (and Claude Desktop's **Code tab**, which shares CLI installs automatically). **Cowork** is a separate Anthropic-managed store that does **not** share CLI installs — a known limitation. Use the Code tab, or install Cowork-specific plugins from `genie-cowork-plugin-marketplace`. The cross-harness sync can also surface skills to Cowork-side agents via `~/.agents/skills`.

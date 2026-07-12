@@ -8,7 +8,7 @@ The shortest path from zero to a working Genie setup. Pick the entry point that 
 > gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
 > ```
 >
-> The exact reverse is `python3 uninstall.py` (add `--purge` to delete the clones too). Everything below still works standalone if you'd rather install just one piece.
+> The exact reverse is `python3 uninstall.py` (add `--purge` to delete the clones too) — it backs up your `.env`, config, memory, vault, and overlays first, so the clone is safe to delete afterward. See [Step 3 below](#step-3--update-or-uninstall). Everything below still works standalone if you'd rather install just one piece.
 
 > **Most repos here are 🔒 members-only.** If a `git clone` or `gh repo clone` fails with "repository not found," you're not yet a member of the `Claude-Code-Academy` org. [Join the community](https://www.skool.com/claude-code-academy) and you'll be added.
 
@@ -57,6 +57,8 @@ Then:
 3. Open the folder in Claude Code and just start talking — it greets you by name and you're working.
 
 Prefer to drive it from chat? Clone, open in Claude Code, and run `/genie-init` (or say *"set up Genie for me"*).
+
+> **First-session prompt:** your first Claude Code session in the clone will ask you to trust a new hook — that's the Genie session banner (a `SessionStart` hook shipped in the repo). This is expected; approve it.
 
 ➡️ Full walkthrough: [products.md → genie-aios](products.md#genie-aios)
 
@@ -122,3 +124,20 @@ Either way, start a new session. Installed Genie skills also fan out to Codex, G
 - **Plugins:** run `/plugin` to confirm the bundle is installed and enabled.
 
 Stuck? See the **[FAQ](faq.md)**.
+
+---
+
+## Step 3 — Update or uninstall
+
+**Update Genie itself** — inside an OS clone (genie-aios etc.):
+
+```bash
+python3 update.py            # fetch + fast-forward pull + re-run setup
+python3 update.py --check    # check whether an update is available, change nothing
+```
+
+Or say *"update Genie"* / run `/genie-update`. **Plugin bundles update separately** — they come from the marketplace, not the repo: `/plugin marketplace update genie` refreshes the catalog, then `/plugin update <bundle>` (or `/plugin update` for all installed bundles).
+
+**Uninstall, with a safety net** — `python3 uninstall.py` (or `/genie-uninstall`) now backs up your `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/<os>-<timestamp>/` *before* removing anything. `outputs/` is intentionally **not** backed up (it can be huge). Once the backup lands, the clone is genuinely safe to delete — no need to keep it around "just in case." The next time you run `python3 init.py` on a fresh clone, it detects the backup and offers to restore it (`--yes` auto-restores; `--no-restore` skips).
+
+**Optional terminal splash:** if you'd like Genie to announce itself when you launch `claude` or `codex` from a terminal (not just inside Claude Code), opt in with `python3 scripts/install_shell_banner.py` from an OS clone. zsh only; `--uninstall` removes it cleanly. Nothing runs unless you invoke this yourself.

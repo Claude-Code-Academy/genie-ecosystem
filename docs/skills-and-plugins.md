@@ -10,7 +10,7 @@ The Genie marketplaces (`init.py` registers `genie` + `genie-curated` + `genie-c
 
 | Marketplace | What's in it |
 |---|---|
-| **`genie`** | 8 first-party plugins authored by Claude Code Academy. Home: [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace). |
+| **`genie`** | 9 first-party plugins authored by Claude Code Academy. Home: [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace). |
 | **`genie-curated`** | Vetted third-party plugins/skills/MCP servers, each SHA-pinned. Home: [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace). **Live.** |
 | **`genie-internal`** | Maintainer-only admin tooling (not registered for members). Home: [genie-internal-plugins](https://github.com/Claude-Code-Academy/genie-internal-plugins). |
 | **`genie-cowork`** | Plugins packaged for Claude Cowork — see [below](#genie-cowork-plugin-marketplace). Home: [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace). |
@@ -44,7 +44,9 @@ Same thing via GUI: click the **`+`** next to the prompt box → **Plugins** →
 
 > Slash commands must be typed by **you** — Claude can't fire `/plugin` on your behalf. But it can print the exact commands and help you fill in `.env` after.
 
-### The 8 bundles
+> **This updates the bundle, not Genie itself.** If you're inside a Genie OS clone (genie-aios etc.), `/plugin update` refreshes the *plugins* only — the repo (config, memory, `init.py`/`setup.py` logic) updates separately via `python3 update.py` (or `/genie-update`). See the README's "Keep it updated" section.
+
+### The 9 bundles
 
 | Bundle | What it does |
 |---|---|
@@ -53,7 +55,8 @@ Same thing via GUI: click the **`+`** next to the prompt box → **Plugins** →
 | `coaching` | 1-to-1 Claude Code coaching plans and Excalidraw diagrams. |
 | `google-workspace` | Google Drive/Docs auth setup and Markdown → Google Doc conversion. |
 | `skill-authoring` | Meta-tools for building and sanitizing your own Claude Code skills. |
-| `second-brain` | Create and maintain a self-maintaining Obsidian knowledge vault an AI agent keeps current. |
+| `second-brain` | Create and maintain a self-maintaining Obsidian knowledge vault an AI agent keeps current. **Not the same thing as the standalone [genie-second-brain](https://github.com/Claude-Code-Academy/genie-second-brain) repo** — that repo is the Git-sync kit + Second Brain course companion; this plugin is the skills that create/maintain the vault from inside Claude Code. |
+| `skool-os` | Skool community owner toolkit: study winning Skool communities, distill what works on the cover + About page, build your own cover image + About page + positioning, then monitor competitors and your own page on a cadence so the loop never goes stale. |
 | `ios-app-pipeline` | Verified iOS app pipeline: Xcode setup, Simulator runtime repair, SwiftUI smoke-test build, install/launch, and screenshot proof. |
 | `website-analytics` | Behaviour analytics for any site via Microsoft Clarity: bundles Clarity's official MCP plus `clarity-connect` (install + verify the tag) and `clarity-insights` (query funnel drop-off / what to fix). |
 

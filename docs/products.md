@@ -29,7 +29,9 @@ Deep dives on the four product repos: the personal OS, the two builder OSes, and
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-`init.py` is idempotent and interactive (7 steps). It registers the marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs your profile's plugin bundle (default **member**: content-os, coaching, google-workspace, skill-authoring, second-brain; `--profile maintainer` adds internal tooling), scaffolds skill overlays, regenerates `.env.example`, walks you through `config.yaml`, and finally (step 7) fans your installed skills out to your other AI harnesses (Codex, Hermes, `~/.agents/skills`) via `genie-add`'s sync — best-effort: it needs `genie-essentials@genie` installed and prints a hint if skipped. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`.
+`init.py` is idempotent and interactive (7 steps). It registers the marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs your profile's plugin bundle (default **member**: content-os, coaching, google-workspace, skill-authoring, second-brain; `--profile maintainer` adds internal tooling), scaffolds skill overlays, regenerates `.env.example`, walks you through `config.yaml`, and finally (step 7) fans your installed skills out to your other AI harnesses (Codex, Hermes, `~/.agents/skills`) via `genie-add`'s sync — best-effort: it needs `genie-essentials@genie` installed and prints a hint if skipped. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`. On that first session you'll also see a one-time Claude Code hook-trust prompt for the Genie session banner — expected, approve it.
+
+The member profile is a starting set, not the whole catalog — the `genie` marketplace has **9** first-party bundles total (see [skills-and-plugins.md](skills-and-plugins.md)); install any of the rest à la carte with `/plugin install <bundle>@genie` (e.g. `ios-app-pipeline`, `website-analytics`, `skool-os`).
 
 **Add more skills later:**
 
@@ -41,6 +43,17 @@ python3 install.py skill-scanner     # install one (flat names, no category pref
 Then run `/genie-setup` (or `python3 setup.py`) to scaffold its overlay and refresh `.env.example`.
 
 **Personalise a skill — the overlay contract:** every installed skill gets a gitignored `PERSONAL.md` plus four frozen folders — `references/`, `assets/`, `examples/`, `snippets/`. Write your overrides in `PERSONAL.md`; your private customizations never touch the shared skill.
+
+**Keep it updated:**
+
+```bash
+python3 update.py            # fetch + fast-forward pull + re-run setup
+python3 update.py --check    # check whether an update is available, change nothing
+```
+
+Or from chat: `/genie-update`. This updates genie-aios itself (the repo, its `VERSION`, and re-runs setup); plugin bundles update separately via `/plugin marketplace update genie` then `/plugin update <bundle>`.
+
+**Uninstall, with a safety net:** `python3 uninstall.py` (or `/genie-uninstall`) now backs up `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/aios-<timestamp>/` before removing anything (`outputs/` is excluded — it can be huge). After that, the clone is genuinely safe to delete. The next `python3 init.py` on a fresh clone offers to restore from the latest backup automatically (`--yes` auto-restores).
 
 ---
 

@@ -28,7 +28,7 @@ Restart Claude Code → put API keys in `.env` → done. `init.py` registers the
 | Build & ship a web app / SaaS (→ Vercel) | **genie-web-os** |
 | Build & ship a mobile app (Expo → TestFlight) | **genie-mobile-os** |
 | Understand the whole ecosystem / find a repo | **genie-ecosystem** (this repo) |
-| Add a themed bundle of Genie skills | **genie-plugin-marketplace** (the `genie` marketplace: 8 first-party plugins; also the authoring home) |
+| Add a themed bundle of Genie skills | **genie-plugin-marketplace** (the `genie` marketplace: 9 first-party plugins; also the authoring home) |
 | Add a vetted third-party plugin/skill/MCP | **genie-curated-marketplace** (the `genie-curated` marketplace: SHA-pinned catalog, live) |
 | Maintainer-only admin tooling | **genie-internal-plugins** (`genie-internal` marketplace) |
 
@@ -44,6 +44,7 @@ Anthropic's own official marketplace complements these. Deep dives live in [`doc
 ## Editing rules
 
 - Keep it **public-safe**: no secrets, no member-only internals, no client data.
-- Keep facts consistent with the canonical narrative: the `genie` marketplace has **8** first-party plugins (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, website-analytics); `genie-curated` is **live** with vetted SHA-pinned entries; skills install once and fan out to every harness.
+- Keep facts consistent with the canonical narrative: the `genie` marketplace has **9** first-party plugins (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, skool-os, website-analytics); `genie-curated` is **live** with vetted SHA-pinned entries; skills install once and fan out to every harness. Two things are named "second-brain" on purpose — the `second-brain` plugin (skills) and the standalone `genie-second-brain` repo (sync kit + course companion) — don't conflate them in docs.
+- Genie itself updates via `python3 update.py` (or `/genie-update`) inside each OS clone; plugin bundles update separately via `/plugin update <bundle>`. `/genie-uninstall` (`python3 uninstall.py`) now backs up user data (`.env`, `config.yaml`, `memory/`, `vault/`, overlays) to `~/.genie/backups/<os>-<timestamp>/` before removing anything — `outputs/` is excluded — and the next `init.py` offers to restore it.
 - Don't duplicate the manuals — this repo links to the product repos' own READMEs; keep those links resolving.
 - Scripts are Python 3, stdlib only, cross-platform (Windows uses `python`). See [`CONTRIBUTING.md`](CONTRIBUTING.md).
