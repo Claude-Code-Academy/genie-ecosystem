@@ -83,8 +83,14 @@ reverses exactly what was recorded while preserving `.env`/overlays/projects.
     document the branch strategy. Also unreferenced by the rest of the ecosystem — decide in/out.
 14. Versioning is cosmetic: plugin.json versions (0.0.1–0.3.0) never surface anywhere; no changelog;
     update story ("git pull + re-run init.py") undocumented. Document `/plugin update` + bump-on-release.
+    > **2026-07-12 status: addressed.** genie-aios ships `VERSION` + `update.py` / `/genie-update`
+    > (fetch, fast-forward pull, re-run setup); the update story (repo update vs `/plugin update` for
+    > bundles) is now documented in this repo's README, `docs/getting-started.md`, and `docs/faq.md`.
 15. Two things named "second-brain" (marketplace plugin = skills; `genie-second-brain` repo = sync
     kit + course companion). Intentional, but say so in both READMEs to kill the ambiguity.
+    > **2026-07-12 status: addressed.** README's repo map and `docs/skills-and-plugins.md` now each
+    > carry a one-line disambiguation next to the `second-brain` plugin and the `genie-second-brain`
+    > repo. (Following up in the product repos' own READMEs is still open.)
 16. Plaintext `.env` secrets — already on `genie-aios/ROADMAP.md` (age/SOPS or Infisical), still open.
 
 ## Target architecture (the contract)

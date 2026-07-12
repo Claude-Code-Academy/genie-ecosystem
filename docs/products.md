@@ -29,7 +29,9 @@ Deep dives on the four product repos: the personal OS, the two builder OSes, and
 gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
 ```
 
-`init.py` is idempotent and interactive (7 steps). It registers the marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs your profile's plugin bundle (default **member**: content-os, coaching, google-workspace, skill-authoring, second-brain; `--profile maintainer` adds internal tooling), scaffolds skill overlays, regenerates `.env.example`, walks you through `config.yaml`, and finally (step 7) fans your installed skills out to your other AI harnesses (Codex, Hermes, `~/.agents/skills`) via `genie-add`'s sync — best-effort: it needs `genie-essentials@genie` installed and prints a hint if skipped. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`.
+`init.py` is idempotent and interactive (8 steps). It registers the marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs your profile's plugin bundle (default **member**: content-os, coaching, google-workspace, skill-authoring, second-brain; `--profile maintainer` adds internal tooling), offers to restore your data from a previous Genie backup if one exists, scaffolds skill overlays, regenerates `.env.example`, walks you through `config.yaml`, and finally (step 8) fans your installed skills out to your other AI harnesses (Codex, Hermes, `~/.agents/skills`) via `genie-add`'s sync — best-effort: it needs `genie-essentials@genie` installed and prints a hint if skipped. Useful flags: `--yes` (skip prompts), `--dry-run` (preview only). Then **restart Claude Code**, add keys to `.env`, and start talking. Prefer chat? Run `/genie-init`. On that first session you'll also see a one-time Claude Code hook-trust prompt for the Genie session banner — expected, approve it.
+
+The member profile is a starting set, not the whole catalog — the `genie` marketplace has **9** first-party bundles total (see [skills-and-plugins.md](skills-and-plugins.md)); install any of the rest à la carte with `/plugin install <bundle>@genie` (e.g. `ios-app-pipeline`, `website-analytics`, `skool-os`).
 
 **Add more skills later:**
 
@@ -41,6 +43,17 @@ python3 install.py skill-scanner     # install one (flat names, no category pref
 Then run `/genie-setup` (or `python3 setup.py`) to scaffold its overlay and refresh `.env.example`.
 
 **Personalise a skill — the overlay contract:** every installed skill gets a gitignored `PERSONAL.md` plus four frozen folders — `references/`, `assets/`, `examples/`, `snippets/`. Write your overrides in `PERSONAL.md`; your private customizations never touch the shared skill.
+
+**Keep it updated:**
+
+```bash
+python3 update.py            # fetch + fast-forward pull + re-run setup
+python3 update.py --check    # check whether an update is available, change nothing
+```
+
+Or from chat: `/genie-update`. This updates genie-aios itself (the repo, its `VERSION`, and re-runs setup); plugin bundles update separately via `/plugin marketplace update genie` then `/plugin update <bundle>`.
+
+**Uninstall, with a safety net:** `python3 uninstall.py` (or `/genie-uninstall`) now backs up `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/aios-<timestamp>/` before removing anything (`outputs/` is excluded — it can be huge). After that, the clone is genuinely safe to delete. The next `python3 init.py` on a fresh clone offers to restore from the latest backup automatically (`--yes` auto-restores).
 
 ---
 
@@ -72,7 +85,7 @@ python3 init.py            # installs the Web OS as a GLOBAL plugin + registers 
 
 Add your keys to the generated `.env` (only the stages you'll hit — see `docs/env-setup-guide.md`), re-run `python3 init.py` to wire the MCP servers (**Supabase, Stripe, Playwright, Context7**), **restart Claude Code**, then from any folder: *"I have an idea for a SaaS…"*
 
-Skills install globally as `genie-web-os:<skill>` (e.g. `genie-web-os:supabase`), so they're always available and never collide with another Genie OS. Tear it all down cleanly with `python3 uninstall.py` (or `/genie-uninstall`) — it leaves your `.env` and built apps untouched.
+Skills install globally as `genie-web-os:<skill>` (e.g. `genie-web-os:supabase`), so they're always available and never collide with another Genie OS. Tear it all down cleanly with `python3 uninstall.py` (or `/genie-uninstall`) — it backs up your `.env`, memory, and skill overlays to `~/.genie/backups/web-os-<timestamp>/` before removing anything (`outputs/` is not backed up), and leaves your `.env` and built apps untouched in the clone.
 
 **Back-half skills:** `nextjs-web-setup` (Next.js 15 + TS + Tailwind + shadcn/ui), `design-system` (tokens, theming, page templates, screenshot-verified via Playwright), `supabase` (auth + Postgres + RLS + storage), `stripe` (checkout, portal, webhooks, subscriptions).
 
@@ -98,7 +111,7 @@ cd genie-mobile-os
 python3 init.py            # installs the Mobile OS as a GLOBAL plugin + wires the RevenueCat MCP
 ```
 
-Add keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then from any folder: *"I have an idea for an app…"* Skills install globally as `genie-mobile-os:<skill>`. Clean removal via `python3 uninstall.py` (or `/genie-uninstall`).
+Add keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then from any folder: *"I have an idea for an app…"* Skills install globally as `genie-mobile-os:<skill>`. Clean removal via `python3 uninstall.py` (or `/genie-uninstall`) — it backs up your `.env`, memory, and skill overlays to `~/.genie/backups/mobile-os-<timestamp>/` before removing anything (`outputs/` is not backed up).
 
 **Back-half skills:** `expo-mobile-setup` (Expo Router + NativeWind + Zustand + TanStack Query; app base cloned from the public [expo-revenuecat-claude-starter](https://github.com/Claude-Code-Academy/expo-revenuecat-claude-starter)), `supabase`, `revenuecat` (SDK, paywall, entitlements), `subscription-products` (programmatic IAP in App Store Connect + RevenueCat).
 
