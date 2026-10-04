@@ -19,10 +19,14 @@ spec = importlib.util.spec_from_file_location('assemble_bootstrap_release', ROOT
 assembler = importlib.util.module_from_spec(spec); spec.loader.exec_module(assembler)
 
 class BootstrapTests(unittest.TestCase):
-    def test_published_gate_before_auth_or_installer(self):
+    def test_unpublished_gate_before_auth_or_installer(self):
         with tempfile.TemporaryDirectory() as directory, patch.object(bootstrap, 'ensure_gh') as gh, patch.object(bootstrap, 'provision_client') as client:
+            # Exercise an unpublished channel without depending on the actual
+            # publisher pin, which changes when a release becomes available.
+            release = Path(directory) / 'unpublished.json'
+            release.write_text(json.dumps({'schema_version': 1, 'core': None}))
             with contextlib.redirect_stderr(io.StringIO()):
-                code = bootstrap.main(['--home', directory, '--harness', 'codex', '--non-interactive'])
+                code = bootstrap.main(['--home', directory, '--release', str(release), '--harness', 'codex', '--non-interactive'])
             self.assertEqual(code, 2)
             gh.assert_not_called(); client.assert_not_called()
             receipt = json.loads((Path(directory) / 'bootstrap' / 'receipt.json').read_text())
