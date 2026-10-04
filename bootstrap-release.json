@@ -1,5 +1,13 @@
 {
   "schema_version": 1,
-  "core": null,
-  "status": "unpublished-preview"
+  "status": "published-alpha",
+  "core": {
+    "repo": "Claude-Code-Academy/genie-aios",
+    "tag": "v0.1.0-alpha.1",
+    "asset": "genie-core-bootstrap.zip",
+    "sha256": "1f156d4632f930ddab4524595d7577032de35a56ac6bfa70db5e13f7bfa1d79e",
+    "source_revision": "a311b95dd4354d4124fdb9099fdd135467ba6044",
+    "catalog": "catalog.json"
+  },
+  "prerelease": true
 }

@@ -21,10 +21,14 @@ See [the full setup guide](../portable-bootstrap-preview.md).
 
 ## Qualification limits
 
-The local implementation gate passed 201 Core tests, 16 bootstrap tests and 14
+The corrected local release gate passed 203 Core tests, 22 bootstrap tests and 14
 Content regression tests; one Content test was skipped for an absent optional
-dependency. Release changes add provenance tests and remote CI results are visible
-in GitHub Actions. Automated tests do not certify native account, desktop or
+dependency. The [Core CI matrix](https://github.com/Claude-Code-Academy/genie-aios/actions/runs/37221616937)
+passed on macOS, Windows and Linux with Python 3.11/3.12, and the
+[bootstrap matrix](https://github.com/Claude-Code-Academy/genie-ecosystem/actions/runs/37221173242)
+passed on all three operating systems. Single-repository CI explicitly skips
+checks needing sibling product sources; those passed in the complete local
+release workspace. Automated tests do not certify native account, desktop or
 Windows workflow behavior.
 
 Real fresh/existing machine installation, native desktop skill invocation,
