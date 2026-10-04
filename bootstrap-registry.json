@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "observed": "2026-10-04",
+  "qualified": false,
+  "platforms": {
+    "macos-arm64": {
+      "python": {
+        "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261003/cpython-3.12.15%2B20261003-aarch64-apple-darwin-install_only.tar.gz",
+        "sha256": "316a463172740e71d8dca1f2730784e325f3f720941137b5d674d5801a632213",
+        "version": "3.12.15+20261003",
+        "executable": "python/bin/python3"
+      },
+      "gh": {
+        "url": "https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_macOS_arm64.zip",
+        "sha256": "da922c20d1792e5b2cbf375593d7a658acf034c12c84e007e71c76ef959c337e",
+        "version": "2.102.0",
+        "executable": "gh_2.102.0_macOS_arm64/bin/gh"
+      }
+    },
+    "windows-x64": {
+      "python": {
+        "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261003/cpython-3.12.15%2B20261003-x86_64-pc-windows-msvc-install_only.tar.gz",
+        "sha256": "4b6f0beebbb695a0f3ea237b8c3eaa5bd424f47a7bc25b2fbe3a43390c770f08",
+        "version": "3.12.15+20261003",
+        "executable": "python/python.exe"
+      },
+      "gh": {
+        "url": "https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_windows_amd64.zip",
+        "sha256": "ae64e556ecc240b200f7eba60d550e4bb60d78e860e69dd88c449405b86067f4",
+        "version": "2.102.0",
+        "executable": "bin/gh.exe"
+      }
+    }
+  },
+  "clients": {
+    "claude": {
+      "macos-arm64": {
+        "kind": "vendor-script",
+        "filename": "claude-install.sh",
+        "url": "https://claude.ai/install.sh",
+        "verification": "vendor-TLS-and-native-payload-verification",
+        "sha256": null
+      },
+      "windows-x64": {
+        "kind": "vendor-script",
+        "filename": "claude-install.ps1",
+        "url": "https://claude.ai/install.ps1",
+        "verification": "vendor-TLS-and-native-payload-verification",
+        "sha256": null
+      }
+    },
+    "codex": {
+      "macos-arm64": {
+        "url": "https://github.com/openai/codex/releases/download/rust-v0.160.0/codex-aarch64-apple-darwin.tar.gz",
+        "sha256": "07c3c7ca376a8f791115342f53138dda37e97cfa29b8125d0652d93784894b5d",
+        "kind": "binary",
+        "filename": "codex-aarch64-apple-darwin.tar.gz",
+        "archive": true,
+        "version": "0.160.0"
+      },
+      "windows-x64": {
+        "url": "https://github.com/openai/codex/releases/download/rust-v0.160.0/codex-x86_64-pc-windows-msvc.exe",
+        "sha256": "fdda5fa3cf3fb3d000b876720742857676293e4315e4b045fae6f8bd7e866d1d",
+        "kind": "binary",
+        "filename": "codex-x86_64-pc-windows-msvc.exe",
+        "archive": false,
+        "version": "0.160.0",
+        "companions": [
+          {
+            "filename": "codex-windows-sandbox-service.exe",
+            "url": "https://github.com/openai/codex/releases/download/rust-v0.160.0/codex-windows-sandbox-service-x86_64-pc-windows-msvc.exe",
+            "sha256": "e74be3680418fad7deea5ef972cb04d058ccd165d0883622376a0c549fb044e5"
+          },
+          {
+            "filename": "codex-windows-sandbox-setup.exe",
+            "url": "https://github.com/openai/codex/releases/download/rust-v0.160.0/codex-windows-sandbox-setup-x86_64-pc-windows-msvc.exe",
+            "sha256": "8f91d62aca2aca87b0ebf446848b817720415dd3080905ffc3085c17b70bd57a"
+          }
+        ]
+      }
+    },
+    "hermes": {
+      "macos-arm64": {
+        "kind": "vendor-script",
+        "filename": "hermes-install.sh",
+        "url": "https://hermes-agent.nousresearch.com/install.sh",
+        "sha256": "e5b8a80332aff53302cb92aa6dad524d8c274f4ac6b2d44f23229f623acd4721",
+        "verification": "pinned-vendor-script-delegated-payloads"
+      },
+      "windows-x64": {
+        "kind": "vendor-script",
+        "filename": "hermes-install.ps1",
+        "url": "https://hermes-agent.nousresearch.com/install.ps1",
+        "sha256": "9c9b958b0849fcc06ce3866fc12f0d9338220c70ad8becd0e9365741582d4685",
+        "verification": "pinned-vendor-script-delegated-payloads"
+      }
+    }
+  },
+  "desktop": {
+    "claude": {
+      "macos-arm64": {
+        "url": "https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect",
+        "filename": "Claude.dmg",
+        "sha256": null,
+        "verification": "vendor-TLS-native-signing-and-user-prompts"
+      },
+      "windows-x64": {
+        "url": "https://claude.ai/api/desktop/win32/x64/exe/latest/redirect",
+        "filename": "Claude-Setup.exe",
+        "sha256": null,
+        "verification": "vendor-TLS-native-signing-and-user-prompts"
+      }
+    }
+  },
+  "sources": {
+    "python": "https://github.com/astral-sh/python-build-standalone/releases/tag/20261003",
+    "gh": "https://github.com/cli/cli/releases/tag/v2.102.0",
+    "codex": "https://github.com/openai/codex/releases/tag/rust-v0.160.0",
+    "claude": "https://code.claude.com/docs/en/setup",
+    "hermes": "https://hermes-agent.nousresearch.com/docs/getting-started/installation"
+  }
+}

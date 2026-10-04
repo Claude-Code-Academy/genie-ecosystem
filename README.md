@@ -1,4 +1,6 @@
 <p align="center">
+
+
   <a href="https://www.skool.com/claude-code-academy">
     <img src="https://raw.githubusercontent.com/Claude-Code-Academy/genie-public-assets/main/assets/banner.png" alt="Genie — Claude Code Academy" width="100%">
   </a>
@@ -25,7 +27,34 @@ This is the **mother repo** for the Genie ecosystem. It owns no product code —
 
 ---
 
-## Install everything in one command
+## Portable Genie alpha — Claude Code, Codex and Hermes
+
+The **v0.1.0-alpha.1 prerelease** adds a shared package store, optional Content OS,
+Mobile OS and Web OS, and private preferences that survive updates. This is an
+opt-in alpha: native desktop, real account setup and Windows workflow qualification
+are still in progress. The stable legacy route remains below.
+
+Clone or download this public repository, then run:
+
+```sh
+./setup.sh
+```
+
+On Windows PowerShell:
+
+```powershell
+.\setup.ps1
+```
+
+Setup guides application selection, member GitHub sign-in, provider sign-in and
+optional departments. Product packages remain members-only; downloading this
+public launcher does not grant product access. Core is the default. Supported
+provisioning routes currently target Apple Silicon macOS and Windows x64; those
+routes still need real-machine qualification. See the [alpha setup guide](docs/portable-bootstrap-preview.md)
+and [release notes](docs/releases/portable-v0.1.0-alpha.1.md) before using it.
+
+## Legacy installation
+
 
 **Prerequisites:** membership in the `Claude-Code-Academy` GitHub org, the `gh` CLI authenticated (`gh auth login`), plus `git`, `python3`, and the `claude` CLI on your PATH.
 

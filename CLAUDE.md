@@ -1,5 +1,8 @@
 # genie-ecosystem — the public front door
 
+> **Portable bootstrap exception:** the approved setup path permits minimal `setup.sh` and `setup.ps1` launchers solely to obtain a verified Python runtime and start `bootstrap.py`. Product lifecycle/context logic remains in private Genie Core; this public repository contains no member-only source or credentials. See [portable bootstrap preview](docs/portable-bootstrap-preview.md). Existing legacy instructions remain applicable to legacy installations.
+
+
 This is the **public map and front door** for the Genie ecosystem. It owns no product code. It exists so a new human or a fresh agent can answer three questions fast: *what is this, what do I install first, and which repo do I go to for X.*
 
 Everything Genie is published under the [Claude-Code-Academy](https://github.com/Claude-Code-Academy) GitHub org. Most product repos are members-only; this one is public, so **nothing private (keys, member-only internals, client data) belongs here.**
