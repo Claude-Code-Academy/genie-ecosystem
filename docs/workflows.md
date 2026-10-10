@@ -1,5 +1,7 @@
 # Workflows
 
+> **New member setup:** follow [the canonical guide and prompt](getting-started.md). The native-plugin and standalone installation recipes below are optional/legacy references, not the default portable setup. Check [the current ecosystem map](member-ecosystem-map.md) before assuming a capability is portable or ready in another harness.
+
 End-to-end recipes that combine the pieces. Each one names the repos involved and the order to do things in.
 
 > Most repos are **🔒 members-only**. **Windows:** use `python` instead of `python3`.

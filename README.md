@@ -9,7 +9,7 @@
 <h1 align="center">The Genie Ecosystem</h1>
 
 <p align="center">
-  <em>The starting point for everything Genie — a personal AI Operating System built on <a href="https://claude.com/claude-code">Claude Code</a>.<br>
+  <em>The starting point for everything Genie — a shared AI capability layer for Claude Code, Codex and Hermes.<br>
   What each repo is, when to use it, how to use it, and where to go next.</em>
 </p>
 
@@ -20,93 +20,42 @@
 
 ---
 
-> **New here? Start with [docs/getting-started.md](docs/getting-started.md).**
-> **Not sure which tool you need? Jump to [docs/when-to-use-what.md](docs/when-to-use-what.md).**
+> **Members: [open the setup guide and copy its prompt](docs/getting-started.md).** Give that prompt to your local agent; it handles setup and guides sign-ins. This is the canonical entry point even when you start from the private Genie AIOS repository.
+> **What is included?** [Portable modules and the optional ecosystem](docs/member-ecosystem-map.md).
 
 This is the **mother repo** for the Genie ecosystem. It owns no product code — it's the map **and the front door**. Everything Genie is published under [Claude Code Academy](https://github.com/Claude-Code-Academy); most of those repos are **🔒 members-only**. This repo is public so anyone can understand the whole picture before joining.
 
 ---
 
-## Portable Genie alpha — Claude Code, Codex and Hermes
+## Set up Genie
 
-The **v0.1.0-alpha.1 prerelease** adds a shared package store, optional Content OS,
-Mobile OS and Web OS, and private preferences that survive updates. This is an
-opt-in alpha: native desktop, real account setup and Windows workflow qualification
-are still in progress. The stable legacy route remains below.
+Follow **[the member setup guide](docs/getting-started.md)**. It contains the prompt
+to paste into a local Codex, Claude Code or Hermes session, the one-command
+launcher, guided authentication, recovery and fresh-session verification.
 
-Clone or download this public repository, then run:
+Core is included; Content OS, Mobile OS and Web OS are optional. The current
+**v0.1.0-alpha.1** release has provisioning routes for Apple Silicon macOS and
+native Windows x64. Real account, native workflow and desktop qualification
+remain pending; the guide tells your agent how to verify your selected workflows.
+A normal web chat or remote task cannot install into your local machine.
 
-```sh
-./setup.sh
-```
+Private packages require your own GitHub member access. The public guide does not
+bypass that access. See [membership and updates](docs/member-access.md).
 
-On Windows PowerShell:
+Existing users who explicitly want the older native-plugin route can use the
+[legacy standalone reference](docs/legacy-getting-started.md). Developer-only
+source flags live in the [bootstrap reference](docs/portable-bootstrap-preview.md).
 
-```powershell
-.\setup.ps1
-```
-
-Setup guides application selection, member GitHub sign-in, provider sign-in and
-optional departments. Product packages remain members-only; downloading this
-public launcher does not grant product access. Core is the default. Supported
-provisioning routes currently target Apple Silicon macOS and Windows x64; those
-routes still need real-machine qualification. See the [alpha setup guide](docs/portable-bootstrap-preview.md)
-and [release notes](docs/releases/portable-v0.1.0-alpha.1.md) before using it.
-
-## Legacy installation
-
-
-**Prerequisites:** membership in the `Claude-Code-Academy` GitHub org, the `gh` CLI authenticated (`gh auth login`), plus `git`, `python3`, and the `claude` CLI on your PATH.
-
-**Just want the personal OS?** That's the common path — clone genie-aios and run its setup:
-
-```bash
-gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
-```
-
-Then restart Claude Code, put your API keys in `.env`, and you're working. See [docs/getting-started.md](docs/getting-started.md).
-
-**Want several OSes at once?** Clone this repo, run one script, and pick what you want — it clones the OSes you choose and runs each one's own idempotent setup.
-
-```bash
-gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
-```
-
-- `python3 install.py --all --yes` — everything, no questions asked.
-- `python3 install.py --aios --profile member` — just the personal OS.
-- `python3 install.py --dry-run --all` — preview every step, change nothing.
-
-And the exact reverse, also one command:
-
-```bash
-python3 uninstall.py            # removes every plugin/marketplace/MCP server Genie installed
-python3 uninstall.py --purge    # ...and deletes the clones the installer created
-```
-
-Your `.env` files, `PERSONAL.md` overlays, and built projects always survive an uninstall. `--purge` only ever deletes clones the installer itself created, and refuses to touch any clone with uncommitted changes or user data (`.env`, `projects/`, `outputs/`) unless you add `--force`. Before it touches anything, each OS's own uninstall now backs up your `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/<os>-<timestamp>/` — after that, the clone is genuinely safe to delete by hand too (note: `outputs/` is **not** backed up, since it can be huge). Restore happens automatically the next time you run `python3 init.py` on a fresh clone (it offers to restore from the latest backup; `--yes` auto-restores). After installing, add plugins à la carte any time: `/plugin install <name>@genie`.
-
-**Install once, use everywhere.** Installing a Genie plugin in Claude Code also makes its skills available in **Codex** (CLI + desktop + IDE), **Gemini CLI**, **Cursor**, **OpenCode**, and **Hermes** — no reinstall per tool. `init.py` does the fan-out on a fresh clone (step 8/8 — best-effort: it needs the `genie-essentials` plugin installed and prints a hint if the step was skipped); afterwards the `genie-add` skill (in the `genie-essentials` plugin) keeps it in sync, and `python3 export-skills.py` here is the standalone bridge that does the same job. Skills land in `~/.agents/skills/` (the open [agentskills.io](https://agentskills.io) dir, which Codex/Cursor/OpenCode scan) and `~/.hermes/skills/`; plugins that bundle an MCP server also register in Codex. **Restart the other harness** to pick up changes. Keys live once in `~/.claude/genie/.env` and every surface finds them. Claude Desktop's **Code tab** shares CLI installs automatically; **Cowork** does not (a known Anthropic limitation — use the Code tab, or let the sync feed Cowork via `~/.agents/skills`). Full detail: [docs/skills-and-plugins.md](docs/skills-and-plugins.md#install-once-use-everywhere).
-
----
-
-## Keep it updated
-
-**Genie itself** (the OS repo) updates from inside each clone:
-
-```bash
-python3 update.py            # fetch + fast-forward pull + re-run setup, in one step
-python3 update.py --check    # just check whether an update is available — changes nothing
-```
-
-Or from chat: `/genie-update`. If your tree has local edits that conflict with the pull, `update.py` tells you exactly which files and how to stash/pull/pop — it never force-resets your changes.
-
-**Plugin bundles** update separately, since they come from the marketplace, not the repo: `/plugin marketplace update genie` refreshes the catalog, then `/plugin update <bundle>` (or `/plugin update` for all installed bundles).
+For portable installations, `genie update --check` previews installed-component
+updates and `genie update` applies them. `genie uninstall content-os` removes a
+department's owned registrations while retaining private data. Use a fresh agent
+session after changes. Native legacy plugins keep their separate lifecycle.
 
 ---
 
 ## What is Genie?
 
-**Genie is a personal AI Operating System built on Claude Code.** Instead of treating Claude as a chat box, Genie gives it a persistent identity, memory, your preferences, and a library of skills — so one `git clone` becomes a daily driver you talk to in plain English, and the same template scales to a turnkey deployment you can set up for a paying client.
+**Genie is a shared capability and context layer for your AI applications.** It supplies skills, private preferences and knowledge while Claude Code, Codex or Hermes provides the agent runtime. The portable alpha shares installed resources through adapters. Separate native offerings and legacy workspaces remain available for their documented use cases; their presence does not imply portable compatibility.
 
 The ecosystem fans out from that core idea into three layers:
 
@@ -125,11 +74,11 @@ The ecosystem fans out from that core idea into three layers:
 | Use Claude as your **daily personal OS** (memory, routines, your skills) | **genie-aios** 🔒 | [products](docs/products.md#genie-aios) |
 | Build & ship a **web app / SaaS** (Next.js + Supabase + Stripe → Vercel) | **genie-web-os** 🔒 | [products](docs/products.md#genie-web-os) |
 | Build & ship a **mobile app** (Expo → TestFlight) | **genie-mobile-os** 🔒 | [products](docs/products.md#genie-mobile-os) |
-| Take a **finished app**, rebrand it, and sell it | **genie-whitelabel** 🔒 | [products](docs/products.md#genie-whitelabel) |
-| Install a **themed bundle of skills** in one command | **genie-plugin-marketplace** (the `genie` marketplace) 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
-| Add **one specific skill** across every harness | `npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <name>` | [skills & plugins](docs/skills-and-plugins.md) |
+| Browse future **white-label app templates** (catalog currently empty) | **genie-whitelabel** 🔒 | [products](docs/products.md#genie-whitelabel) |
+| Install an optional **native Claude plugin bundle** | **genie-plugin-marketplace** (the `genie` marketplace) 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
+| Add **one specific skill** through a separate native route | `npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <name>` | [skills & plugins](docs/skills-and-plugins.md) |
 | Install **vetted third-party** tools (SHA-pinned, reviewed) | **genie-curated-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
-| Add skills inside **Claude Cowork** (desktop, chat-first) | **genie-cowork-plugin-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
+| Explore **Claude Cowork** (catalog currently empty) | **genie-cowork-plugin-marketplace** 🔒 | [skills & plugins](docs/skills-and-plugins.md) |
 
 Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobile OS, library vs marketplace): **[docs/when-to-use-what.md](docs/when-to-use-what.md)**.
 
@@ -144,7 +93,7 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 | [genie-aios](https://github.com/Claude-Code-Academy/genie-aios) | The core personal AI Operating System. One clone → your daily driver; scales to a client deployment. | 🔒 Members |
 | [genie-web-os](https://github.com/Claude-Code-Academy/genie-web-os) | Idea → SaaS → Vercel. Next.js + Supabase + Stripe + Playwright pipeline, one skill per stage. | 🔒 Members |
 | [genie-mobile-os](https://github.com/Claude-Code-Academy/genie-mobile-os) | Idea → mobile app → TestFlight. Expo + RevenueCat pipeline, one skill per stage. | 🔒 Members |
-| [genie-whitelabel](https://github.com/Claude-Code-Academy/genie-whitelabel) | Catalog of finished, production-ready apps published white-label. Take, rebrand, ship, sell. | 🔒 Members |
+| [genie-whitelabel](https://github.com/Claude-Code-Academy/genie-whitelabel) | White-label template catalog; currently no listed projects. Individual future templates carry their own terms. | 🔒 Members |
 
 ### Capabilities — skills, plugins & marketplaces
 
@@ -152,7 +101,7 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 |---|---|---|
 | [genie-skills-library](https://github.com/Claude-Code-Academy/genie-skills-library) | Flat, copy-one-skill-at-a-time library. Drop a folder into `~/.claude/skills/`. | 🔒 Members |
 | [genie-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-plugin-marketplace) | The `genie` marketplace: **9 first-party plugins** (genie-essentials, content-os, coaching, google-workspace, ios-app-pipeline, second-brain, skill-authoring, skool-os, website-analytics). Also the authoring home for all of them. | 🔒 Members |
-| [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace) | The same idea for **Claude Cowork** (desktop knowledge-work mode). | 🔒 Members |
+| [genie-cowork-plugin-marketplace](https://github.com/Claude-Code-Academy/genie-cowork-plugin-marketplace) | Separate **Claude Cowork** catalog; currently no bundles. Not part of portable desktop setup. | 🔒 Members |
 | [genie-curated-marketplace](https://github.com/Claude-Code-Academy/genie-curated-marketplace) | **Live** catalog (~a dozen entries) of vetted third-party plugins/skills/MCP servers, each pinned to a reviewed commit SHA. | 🔒 Members |
 | [genie-directory](https://github.com/Claude-Code-Academy/genie-directory) | Reference-only catalog — names, descriptions, when-to-use. No code. | 🔒 Members |
 | [genie-second-brain](https://github.com/Claude-Code-Academy/genie-second-brain) | Setup kit + reference spec for a self-syncing, self-maintaining Obsidian "second brain" shared across your devices and AI agents — companion to the Second Brain course. **Not the same thing as the `second-brain` plugin** above: that plugin is the *skills* (create/maintain the vault from inside Claude Code); this repo is the Git-sync plumbing + course material underneath it. | 🔒 Members |
@@ -164,7 +113,7 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 | [expo-revenuecat-claude-starter](https://github.com/Claude-Code-Academy/expo-revenuecat-claude-starter) | Expo + RevenueCat starter with a CLAUDE.md ruleset for the full Expo → TestFlight workflow. | 🌐 Public |
 | [genie-public-assets](https://github.com/Claude-Code-Academy/genie-public-assets) | Shared icons, banners, and images used across Genie public content. | 🌐 Public |
 
-> **🔒 = members-only.** The links resolve only for members of the `Claude-Code-Academy` GitHub org. [Join the community](https://www.skool.com/claude-code-academy) to get access. There is also a small set of maintainer-only internal repos (backups + an admin marketplace) that aren't part of the member-facing surface.
+> **🔒 = private member repositories.** The links require the correct GitHub account and an effective repository grant; an accepted organization invitation alone may not be enough. [Join the community](https://www.skool.com/claude-code-academy) to get access. There is also a small set of maintainer-only internal repos (backups + an admin marketplace) that aren't part of the member-facing surface.
 
 ---
 
@@ -172,7 +121,7 @@ Full decision guide, including head-to-head comparisons (AIOS vs Web OS vs Mobil
 
 | Doc | Read it when… |
 |---|---|
-| **[Getting started](docs/getting-started.md)** | You're new and want the shortest path from zero to a working setup. |
+| **[Getting started](docs/getting-started.md)** | The canonical guide and copy/paste prompt for every new member. |
 | **[When to use what](docs/when-to-use-what.md)** | You're deciding between two tools and want a clear call. |
 | **[Products](docs/products.md)** | You want the deep dive on the OSes and the white-label catalog. |
 | **[Skills & plugins](docs/skills-and-plugins.md)** | You want to add capabilities — library vs marketplace vs Cowork vs curated. |

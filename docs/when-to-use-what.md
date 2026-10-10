@@ -1,5 +1,7 @@
 # When to use what
 
+> **New member setup:** follow [the canonical guide and prompt](getting-started.md). The native-plugin and standalone installation recipes below are optional/legacy references, not the default portable setup. Check [the current ecosystem map](member-ecosystem-map.md) before assuming a capability is portable or ready in another harness.
+
 A decision guide for the Genie ecosystem. Start with the goal table, then read the head-to-head comparisons if you're torn between two options.
 
 ---

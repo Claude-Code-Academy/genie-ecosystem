@@ -1,5 +1,7 @@
 # Portable Genie bootstrap preview
 
+> **Member installation:** use [the canonical setup guide](getting-started.md). This page is a developer/provisioning reference; its `--core-source` examples are not the published member path.
+
 This guide describes the opt-in `v0.1.0-alpha.1` prerelease. The client/platform matrix has not passed real machine qualification. Existing `install.py` remains the legacy installation route. Product archives stay in private member repositories; only the launcher and release pins are public. See [release notes](releases/portable-v0.1.0-alpha.1.md).
 
 The preview makes Genie the lifecycle owner for Core and selected departments across Claude Code, Codex, and Hermes. Departments are optional. Native plugins, where necessary, are adapter details managed by Genie. The launcher works from a clone or a downloaded ZIP; Git is not a prerequisite.
@@ -34,7 +36,7 @@ That command writes metadata; it does not publish or establish release approval.
 
 The launchers reuse compatible Python 3.11+; otherwise they fetch a digest-pinned standalone Python runtime from the upstream [Python build standalone release](https://github.com/astral-sh/python-build-standalone/releases/tag/20261003). Managed runtime provisioning currently targets Apple Silicon macOS and native Windows x64. Missing GitHub CLI comes from the pinned [GitHub CLI release](https://github.com/cli/cli/releases/tag/v2.102.0). The initial registry contains actual upstream SHA-256 values observed on 4 October 2026, not guessed checksums. These pins still require native-machine qualification.
 
-Published setup uses native `gh auth login`, then verifies access to the exact private Core repository separately from identity. Organization SSO or membership issues remain guided pending steps. Tokens are not exported into shell profiles or saved in receipts. Additional private department access is checked by Core while fetching each selected package.
+Published setup uses native `gh auth login`, then verifies access to the exact private Core repository separately from identity. Organization SSO or membership issues remain guided pending steps. Tokens are not exported into shell profiles or saved in receipts. The current published envelope embeds all four portable module artifacts, so its download is gated by private Core access; it does not enforce separate department-repository entitlement. Optional source clones and native marketplaces require their own access grants.
 
 Selected missing CLIs use explicit vendor routes:
 

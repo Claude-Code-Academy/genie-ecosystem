@@ -1,143 +1,274 @@
-# Getting started
+# Set up Genie with your agent
 
-The shortest path from zero to a working Genie setup. Pick the entry point that matches what you're trying to do — you do **not** need to install everything.
+**This is the single member setup guide for Genie AIOS.** Accept your Academy
+GitHub invitation, then paste the prompt below into your agent. You do not need
+to clone every Genie repository, install every plugin, or collect every API key.
 
-> **Want it all in one command?** Clone this repo and run the ecosystem installer — it clones the OSes you pick and runs each one's own setup:
->
-> ```bash
-> gh repo clone Claude-Code-Academy/genie-ecosystem && cd genie-ecosystem && python3 install.py
-> ```
->
-> The exact reverse is `python3 uninstall.py` (add `--purge` to delete the clones too) — it backs up your `.env`, config, memory, vault, and overlays first, so the clone is safe to delete afterward. See [Step 3 below](#step-3--update-or-uninstall). Everything below still works standalone if you'd rather install just one piece.
+Genie adds shared skills, context and private preferences to **Claude Code,
+Codex and Hermes**. Core is included; Content OS, Mobile OS and Web OS are optional.
+The currently published portable release is **v0.1.0-alpha.1**. It is available
+to members, with native client/account/desktop qualification still pending.
+The agent must verify your selected workflows on your machine before calling
+them ready. [Release notes](releases/portable-v0.1.0-alpha.1.md).
 
-> **Most repos here are 🔒 members-only.** If a `git clone` or `gh repo clone` fails with "repository not found," you're not yet a member of the `Claude-Code-Academy` org. [Join the community](https://www.skool.com/claude-code-academy) and you'll be added.
+## Copy this prompt
 
----
+```text
+Set up Genie AIOS on my computer. Read and follow this canonical guide:
+https://github.com/Claude-Code-Academy/genie-ecosystem/blob/main/docs/getting-started.md
 
-## Step 0 — Prerequisites
-
-You'll want these on your machine first:
-
-- **Membership in the `Claude-Code-Academy` GitHub org** — the product repos are private. [Join the community](https://www.skool.com/claude-code-academy) to get added.
-- **[Claude Code](https://docs.claude.com/en/docs/claude-code)** — the CLI everything runs on (`claude` on your PATH).
-- **Git** and the **[GitHub CLI](https://cli.github.com/)** (`gh`) — for cloning the private repos. Run `gh auth login` once.
-- **Python 3** — the OS repos use a `python3 init.py` setup script. (**Windows:** use `python` instead of `python3` everywhere below.)
-
----
-
-## Step 1 — Pick your entry point
-
-```
-Do you want to…
-
-  ├─ Use Claude as your personal daily OS ........... → genie-aios       (A)
-  ├─ Build & ship a web app / SaaS ................. → genie-web-os      (B)
-  ├─ Build & ship a mobile app .................... → genie-mobile-os   (C)
-  └─ Just add a skill or two to plain Claude Code .. → skills & plugins  (D)
+Check that you can operate my local machine. Help me choose Claude Code,
+Codex and/or Hermes, plus any optional departments. Then carry out the setup,
+install missing supported prerequisites, and guide me through sign-ins and
+secure credential entry. Preserve my existing configuration and private data.
+Continue through verification and tell me exactly which workflows work and
+what remains pending. Never ask me to paste secrets into chat. If you cannot
+operate my machine, give me the shortest handoff to a local agent that can.
 ```
 
-Not sure? Read **[when-to-use-what.md](when-to-use-what.md)**.
+A local **Codex app/CLI, Claude Code session, or Hermes session with terminal
+and file access** can perform setup. A normal ChatGPT/Claude web conversation,
+remote coding container, or cloud task cannot install software on your laptop
+merely because you paste this link. It can read this public guide and help you
+open a local agent or terminal. Claude Desktop's local **Code** sessions and
+Cowork/ordinary chat are different surfaces; this portable installer does not
+install a Cowork package. No custom Genie desktop is required.
 
----
+## Instructions for the setup agent
 
-## (A) genie-aios — your personal AI Operating System
+Follow the stages below in order and continue after each completed user step.
+Use the released installer for installation logic. Do not improvise a new
+installer, copy skills by hand, or run the legacy `init.py` / `install.py` /
+`export-skills.py` route for this request. Source-development flags such as
+`--core-source`, `--skip-dependencies` and replacement catalogs are not the member
+route. Existing legacy installations can remain in place while inspected;
+do not convert or remove them implicitly.
 
-One clone, one command:
+### 1. Check the machine and choose the experience
 
-```bash
-gh repo clone Claude-Code-Academy/genie-aios && cd genie-aios && python3 init.py
+- Confirm commands run on the member's intended computer and user account,
+  with local filesystem access and an interactive terminal for sign-in.
+  A desktop UI does not by itself prove the task's execution is local.
+- Detect OS/architecture and existing applications. The published bootstrap
+  currently offers **Apple Silicon macOS** and **native Windows x64** routes.
+  These are alpha provisioning routes, not a completed support certification.
+  Intel macOS, Linux, Windows ARM, WSL and hosted execution are outside this
+  bootstrap matrix. Explain the exact limitation; do not silently switch hosts.
+- Ask only for missing choices: applications (any subset of Claude Code, Codex,
+  Hermes), local desktop as well as terminal, and optional departments.
+  Suggest the current local application and **Core only** if the member has no
+  preference. Add Content OS for content work, Mobile OS for app development,
+  Web OS for web/SaaS development. "All three departments" does not mean every
+  repository or every native marketplace plugin.
+- Reuse working installations. Detect existing Genie storage, custom client
+  homes/profiles and owned registrations before changing them. Keep their paths
+  and environment active during setup; use the existing Genie data root with
+  `--home` when it differs from `~/.genie`. Do not change `HOME` to simulate a
+  user: `--user-home` does not isolate native vendor installers.
+
+If `GENIE_HOME` is set, pass its resolved path through `--home`; bootstrap does
+not use that variable as its default data root. Core recognizes `CODEX_HOME`
+and `HERMES_HOME`, but this alpha bootstrap does **not** automatically redirect
+Claude registrations through `CLAUDE_CONFIG_DIR`. A custom Claude directory
+requires separately reviewed configuration: confirm the actual target before
+running setup and keep that surface pending until verified. Do not replace it
+with a default-home installation. Named client/provider profiles also require
+checking the member's intended active profile; setup is not a profile selector.
+
+If local execution is unavailable, say so immediately. Help the member open an
+already installed local agent and paste the same prompt. If none is installed,
+guide them to download the public ZIP below and run the one setup command in a
+local terminal; it provisions the selected missing clients. Resume verification
+in that local client after sign-in. Do not claim a cloud sandbox is their machine.
+
+### 2. Obtain the public setup folder
+
+Use an existing clean, current checkout if available. Otherwise download and
+extract the [public setup ZIP](https://github.com/Claude-Code-Academy/genie-ecosystem/archive/refs/heads/main.zip)
+into a fresh folder, or clone
+`https://github.com/Claude-Code-Academy/genie-ecosystem.git` if Git already exists.
+Git is not required for the ZIP route. Do not reset a member's modified checkout.
+
+The extracted folder must contain `setup.sh`, `setup.ps1`, `bootstrap.py`,
+`bootstrap-registry.json` and `bootstrap-release.json`. Read the release metadata
+and keep the published private repository, tag and checksum unchanged. Work from
+this folder. The public folder contains the launcher and guide; it does not grant
+access to private Genie packages.
+
+### 3. Run setup and help with the prompts
+
+On Apple Silicon macOS, from the setup folder:
+
+```sh
+sh ./setup.sh
 ```
 
-`init.py` is interactive and idempotent (8 steps). It registers the Genie marketplaces (`genie`, `genie-curated`, `genie-cowork`), installs the member plugin bundle, offers to restore your data from a previous Genie backup if one exists, scaffolds your skill overlays, generates `.env.example`, walks you through `config.yaml` + `memory/about-me.md`, and finally (step 8) fans your installed skills out to your other AI harnesses — Codex, Hermes, and the shared `~/.agents/skills` dir (best-effort: this step uses the `genie-essentials` plugin's sync script and prints a hint if that plugin isn't installed).
+On native Windows x64, from the setup folder in PowerShell:
 
-Then:
-
-1. **Restart Claude Code** so the freshly installed plugins load.
-2. Drop any required API keys into `.env`.
-3. Open the folder in Claude Code and just start talking — it greets you by name and you're working.
-
-Prefer to drive it from chat? Clone, open in Claude Code, and run `/genie-init` (or say *"set up Genie for me"*).
-
-> **First-session prompt:** your first Claude Code session in the clone will ask you to trust a new hook — that's the Genie session banner (a `SessionStart` hook shipped in the repo). This is expected; approve it.
-
-➡️ Full walkthrough: [products.md → genie-aios](products.md#genie-aios)
-
----
-
-## (B) genie-web-os — idea → SaaS → Vercel
-
-```bash
-git clone git@github.com:Claude-Code-Academy/genie-web-os.git
-cd genie-web-os
-python3 init.py            # installs the Web OS as a global plugin + wires MCP servers
+```powershell
+.\setup.ps1
 ```
 
-Add your keys to the generated `.env`, re-run `python3 init.py` to wire the MCP servers (Supabase, Stripe, Playwright, Context7), **restart Claude Code**, then from *any* folder say:
+If Windows blocks a downloaded script, inspect the source and its origin before
+using the member's permitted per-file unblocking procedure. Do not disable
+machine-wide policy or bypass an organization's restrictions.
 
-> *"I have an idea for a SaaS…"*
+The interactive flow asks for applications, departments (Enter keeps Core only),
+and desktop setup. If those choices are already known, pass them directly:
 
-➡️ Full walkthrough: [products.md → genie-web-os](products.md#genie-web-os)
-
----
-
-## (C) genie-mobile-os — idea → mobile app → TestFlight
-
-```bash
-git clone git@github.com:Claude-Code-Academy/genie-mobile-os.git
-cd genie-mobile-os
-python3 init.py            # installs the Mobile OS as a global plugin + wires the RevenueCat MCP
+```sh
+sh ./setup.sh --harness codex --module content-os --desktop
 ```
 
-Add your keys to `.env`, re-run `python3 init.py`, **restart Claude Code**, then from any folder:
-
-> *"I have an idea for an app…"*
-
-➡️ Full walkthrough: [products.md → genie-mobile-os](products.md#genie-mobile-os)
-
----
-
-## (D) Just add skills to plain Claude Code
-
-No OS required. Two ways:
-
-**A themed bundle** (recommended) — inside Claude Code:
-
-```
-/plugin marketplace add Claude-Code-Academy/genie-plugin-marketplace
-/plugin install content-os@genie
+```powershell
+.\setup.ps1 --harness codex --module content-os --desktop
 ```
 
-**One specific skill** — with Node installed:
+`--harness claude,codex,hermes` selects all three; use a comma-separated subset
+without spaces. Repeat `--module` for `content-os`, `mobile-os` and `web-os` as
+selected. Use `--no-desktop` for terminal only. There is no `--all` or `--yes` flag.
+For Core only, omit `--module` and answer the departments prompt with Enter.
 
-```bash
-npx skills add Claude-Code-Academy/genie-plugin-marketplace --skill <skill-name>
+Setup reuses compatible Python 3.11+ or provisions its pinned runtime, provisions
+GitHub CLI when absent, and then:
+
+1. Guides the member's own GitHub browser sign-in and checks access to the exact
+   private Core repository. A successful login alone does not prove entitlement.
+   If access fails, check the accepted invitation, intended account, repository
+   grant and any organization SSO authorization. Request the maintainer's help
+   for access; do not borrow their token.
+2. Downloads and verifies the published Core envelope. The current envelope
+   includes the four portable modules, installing only the selected departments.
+3. Reuses or installs the selected official clients and guides their native
+   provider sign-in. Let the member choose account/provider and billing mode;
+   do not silently switch to API billing. Existing Hermes provider settings
+   remain intact and need their own workflow check.
+4. Installs Core, selected departments, declared helper dependencies and client
+   registrations. Requested desktop installation follows native vendor prompts.
+5. Offers secure connection setup and registers the terminal command on PATH
+   by default (`--no-enable-path` retains only the absolute launcher).
+
+Use a terminal the member can interact with for browser sign-ins, hidden secret
+input and OS prompts. If an agent tool cannot provide interactive stdin, open the
+member's local terminal with the exact setup command and resume when it finishes.
+Do not stream or record credential entry. `--non-interactive` can stage selected
+steps, but it defers authentication/secret entry and is not completed onboarding.
+
+For a connection needed now, help the member obtain its key from the provider and
+enter it in the installer's hidden terminal prompt. New Genie-managed secrets go
+to macOS Keychain or Windows Credential Manager; native OAuth stays native.
+Never request secret values in chat, command arguments, shell profiles or Git.
+Leave existing `.env` files intact. Unneeded integrations can be explicitly
+deferred; do not ask for every key in the ecosystem.
+After a deferred prompt or secure-store failure, resume with
+`genie connections setup --module content-os` (use the intended installed module).
+
+### 4. Resume safely when a step needs attention
+
+The non-secret progress receipt is `<Genie home>/bootstrap/receipt.json` (normally
+`~/.genie/bootstrap/receipt.json`). Inspect the receipt and concise errors, without
+dumping environment files or native authentication output.
+
+| Situation | Next action |
+|---|---|
+| Login cancelled, EOF, incomplete native prompt | Complete the local prompt and rerun the same setup command with the same selections and home. |
+| Repository not found / no private access | Check GitHub account, accepted invitation, repository grant and SSO. A public guide does not grant membership. |
+| Installer checksum mismatch | Stop that download; obtain reviewed publisher metadata. Never remove or bypass checksum verification. |
+| Modified registration or duplicate legacy skill | Inspect ownership and preserve the member's version. Use the migration inventory; resolve the specific conflict before retirement. |
+| Interrupted Core operation | Run `genie status`, inspect the reported operation, and use `genie resume <operation-id>` as appropriate; do not delete state or locks. |
+| Optional dependency/connection unavailable | Report the affected workflow as blocked or deliberately deferred. Continue independent setup. |
+| Unsupported OS/client surface | State the exact unsupported combination. Do not substitute a cloud/WSL install and label it local readiness. |
+
+Keep the setup folder until verification is complete. A registered installed
+launcher works independently of the original source clone. If the current shell
+has not reloaded PATH, use the absolute launcher at `<Genie home>/bin/genie`
+(macOS) or `<Genie home>\bin\genie.cmd` (Windows), or reopen the terminal.
+
+### 5. Verify the result in each selected application
+
+After sign-in and native prompts, use the installed launcher:
+
+```text
+genie status
+genie --json doctor
+genie connections list
+genie context resolve core/welcome
 ```
 
-Either way, start a new session. Installed Genie skills also fan out to Codex, Gemini CLI, Cursor, OpenCode, and Hermes automatically (via `~/.agents/skills` + `~/.hermes/skills`). ➡️ Full details: [skills-and-plugins.md](skills-and-plugins.md#install-once-use-everywhere)
+When diagnosing a particular project, also run
+`genie --json doctor --workspace /absolute/path/to/project` with the real path.
+Check active profile/home, package integrity, instruction precedence,
+registrations, helper dependencies, pending operations and connection blockers.
+Do not infer readiness from the process exit code or a count of installed files.
 
----
+**The current alpha deliberately reports `pending-native-verification` in its
+bootstrap receipt, `qualified: false` from setup and `release_qualified: false`
+from doctor.** Authentication and desktop checks remain unverified there even
+after local success. Do not edit these records to turn them green. Maintain a
+separate concise verification report of what was actually observed.
 
-## Step 2 — Verify it works
+For every selected terminal and desktop surface separately:
 
-- **OS repos:** on your first end-to-end run, follow the smoke-test checklist in each repo's `docs/verification-report.md`.
-- **Skills:** open a *new* Claude Code session (skills load at startup) and trigger the skill by its phrase.
-- **Plugins:** run `/plugin` to confirm the bundle is installed and enabled.
+1. Start a **fresh local session outside the setup clone**. Check that the Genie
+   instruction bridge is effective and the `core-welcome` skill is discoverable.
+   Ask the agent to use it to list installed departments and explain where your
+   private preferences live. Compare with `genie status`.
+2. Run a harmless representative workflow for each chosen department, using its
+   registered skill and resolved private context. Examples: a draft content
+   outline, a mobile idea brief, or a web project brief. Save drafts locally;
+   onboarding does not authorize publishing, deployments or paid external jobs.
+3. For any integration required by that workflow, complete native OAuth/key setup
+   and perform a **read-only** service check. Key presence and MCP registration
+   alone do not prove usable access. Unqualified required capabilities must stay
+   visibly blocked with the next action identified.
+4. Record application/version, OS/architecture, local surface, invoked workflow,
+   result and remaining blockers. A terminal result cannot certify a desktop.
+   If you cannot observe a fresh desktop session, ask the member to perform the
+   exact small check and wait for its result; record it as member-reported evidence.
 
-Stuck? See the **[FAQ](faq.md)**.
+Finish with a short handoff: installed departments and versions, tested surfaces
+and workflows, private data location, deferred connections, and the next exact
+action for anything pending. Say **"ready for these tested workflows"** only when
+those checks actually pass. Do not claim every skill or every application works
+because one draft succeeded.
 
----
+### 6. Show the member the everyday commands
 
-## Step 3 — Update or uninstall
-
-**Update Genie itself** — inside your genie-aios clone (the builder OSes update the same way):
-
-```bash
-python3 update.py            # fetch + fast-forward pull + re-run setup
-python3 update.py --check    # check whether an update is available, change nothing
+```text
+genie install content-os
+genie personalize content-os --skill instagram-carousel --open
+genie connections setup --module content-os
+genie update --check
+genie update
+genie uninstall content-os
+genie doctor
 ```
 
-Or say *"update Genie"* / run `/genie-update`. **Plugin bundles update separately** — they come from the marketplace, not the repo: `/plugin marketplace update genie` refreshes the catalog, then `/plugin update <bundle>` (or `/plugin update` for all installed bundles).
+Use `mobile-os` or `web-os` to add those departments. Restart affected agent
+sessions after changes. Updates apply to installed modules and respect holds;
+removal retains private data. For portable installations, Genie owns department
+lifecycle—do not also install the same department through a native marketplace.
 
-**Uninstall, with a safety net** — `python3 uninstall.py` (or `/genie-uninstall`) now backs up your `.env`, `config.yaml`, `memory/`, `vault/`, and skill overlays to `~/.genie/backups/<os>-<timestamp>/` *before* removing anything. `outputs/` is intentionally **not** backed up (it can be huge). Once the backup lands, the clone is genuinely safe to delete — no need to keep it around "just in case." The next time you run `python3 init.py` on a fresh clone, it detects the backup and offers to restore it (`--yes` auto-restores; `--no-restore` skips).
+Preferences and assets belong under the private `<Genie home>/personal/`
+hierarchy, scoped to root, department, skill or mapped workspace. They do not
+belong in immutable packages or the publisher's repositories. Explicit preferences
+take precedence over shipped defaults within the harness's own instruction and
+permission rules. Keep existing profile/vault pointers; Obsidian captures append
+new `raw/inbox/` files and leave `wiki/` to the Librarian.
 
-**Optional terminal splash:** if you'd like Genie to announce itself when you launch `claude` or `codex` from a terminal (not just inside Claude Code), opt in with `python3 scripts/install_shell_banner.py` from your genie-aios clone. zsh only; `--uninstall` removes it cleanly. Nothing runs unless you invoke this yourself.
+## Optional ecosystem tools and membership
+
+The [ecosystem map](member-ecosystem-map.md) distinguishes the four portable modules
+from native plugins, curated tools, the skill library and the separate second-brain
+kit. Install those only for a requested use case with their own compatibility and
+authentication checks. They are not prerequisites for portable Core. Owner-only
+repositories are excluded from member installation.
+
+Private updates use the member's own GitHub access. Removing all effective access
+prevents future private downloads; it does not remotely delete existing clones,
+installed packages or cached artifacts. See [member access and updates](member-access.md)
+for the exact boundary and repository license links.
+
+Existing legacy installations can use the [legacy setup reference](legacy-getting-started.md).
+Developers can use the [bootstrap implementation reference](portable-bootstrap-preview.md).
+Neither replaces this guide for new member onboarding.

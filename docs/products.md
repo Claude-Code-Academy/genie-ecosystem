@@ -1,5 +1,7 @@
 # Products
 
+> **New member setup:** follow [the canonical guide and prompt](getting-started.md). The native-plugin and standalone installation recipes below are optional/legacy references, not the default portable setup. Check [the current ecosystem map](member-ecosystem-map.md) before assuming a capability is portable or ready in another harness.
+
 Deep dives on the four product repos: the personal OS, the two builder OSes, and the white-label catalog. Each section covers **what it is**, **when to use it**, and **how to start**.
 
 > All four are **🔒 members-only**. [Join](https://www.skool.com/claude-code-academy) for access. **Windows:** use `python` instead of `python3`.

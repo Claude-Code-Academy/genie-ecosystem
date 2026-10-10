@@ -1,5 +1,7 @@
 # Skills & plugins
 
+> **New member setup:** follow [the canonical guide and prompt](getting-started.md). The native-plugin and standalone installation recipes below are optional/legacy references, not the default portable setup. Check [the current ecosystem map](member-ecosystem-map.md) before assuming a capability is portable or ready in another harness.
+
 How to add capabilities to Claude Code — and have them follow you into every other AI harness on the machine. Everything here works in a **vanilla Claude Code session**; none of it requires an OS to be installed.
 
 > Repos here are **🔒 members-only**. [Join](https://www.skool.com/claude-code-academy) for access.

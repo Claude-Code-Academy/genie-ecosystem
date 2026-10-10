@@ -17,7 +17,7 @@ After cloning or downloading the public setup repository, run `./setup.sh` on
 macOS or `.\setup.ps1` on Windows. Sign in to GitHub with a member account and
 complete the selected providers' native login. Setup never silently changes a
 subscription login to API billing. Core is selected unless departments are added.
-See [the full setup guide](../portable-bootstrap-preview.md).
+See [the canonical member setup guide and prompt](../getting-started.md).
 
 ## Qualification limits
 
